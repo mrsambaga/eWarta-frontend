@@ -1,0 +1,20 @@
+@use"../../../style/var/var";
+
+.auth {
+    background-color: #4f7177;
+    padding: 5px 20px;
+    border-radius: 5px;
+    flex: none;
+    flex-grow: 0;
+    border: none;
+    cursor: pointer;
+
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 28px;
+    text-align: center;
+    letter-spacing: 0.2px;
+    color: #FFFFFF;
+}

@@ -1,0 +1,21 @@
+@mixin font-navbar-title {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 28px;
+    line-height: 32px;
+    letter-spacing: 0.1px;
+    color: #454745;
+}
+
+.title {
+    background-color: #fff104;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+
+    & h3 {
+        @include font-navbar-title;
+    }
+}

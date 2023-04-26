@@ -1,0 +1,76 @@
+@use"../../../style/var/var";
+
+@mixin font-navbar {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 24px;
+    text-align: center;
+    letter-spacing: 0.2px;
+    list-style: none;
+}
+
+@mixin font-navbar-global {
+    cursor: pointer;
+    @include font-navbar;
+    text-decoration: none;
+}
+
+@mixin font-navbar-active {
+    cursor: pointer;
+    @include font-navbar;
+    text-decoration: underline;
+    text-underline-offset: 7px;
+}
+
+.navbar {
+    width: 100%;
+    background-color: #f1f3f2;
+    display: flex;
+    justify-content: center;
+
+    &__container {
+        display: flex;
+        width: 70%;
+        justify-content: center;
+        
+        &__nav {
+            display: flex;
+            gap: 5rem;
+        }
+    }
+
+    &__list {
+        display: flex;
+        gap: 2rem;
+        align-items: center;
+        padding: 20px;
+
+        &__item {
+            @include font-navbar;
+
+            .nav-link {
+                @include font-navbar-global;
+                color: var.$secondary-text-color;
+            }
+        }
+
+        &__item-single {
+            @include font-navbar;
+            margin-left: 340px;
+
+            .nav-link {
+                @include font-navbar-global;
+                color: var.$secondary-text-color;
+            }
+        }
+    }
+
+    &__button {
+        display: flex;
+        gap: 1rem;
+        padding: 20px;
+    }
+
+}
