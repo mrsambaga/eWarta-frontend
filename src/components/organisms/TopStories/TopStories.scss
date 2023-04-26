@@ -1,0 +1,31 @@
+@mixin font-navbar-title {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 28px;
+    line-height: 32px;
+    letter-spacing: 0.1px;
+    color: #454745;
+}
+
+.top-stories {
+    width: 100%;
+    &__title {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        & h3 {
+            @include font-navbar-title;
+        }
+
+        &__line {
+            flex: 1;
+            width: 100%;
+            max-width: 390px;
+            height: 5px;
+            margin: 5px 10px;
+            background-color: #fff104;
+        }
+    }
+}

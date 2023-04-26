@@ -2,12 +2,17 @@ import React from "react";
 import "./App.css";
 import Navbar from "./components/organisms/Navbar/Navbar";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Home from "./pages/Home/Home";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Navbar />} />
+        <Route element={<Navbar />}>
+          {/* <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} /> */}
+          <Route path="/" element={<Home />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );
