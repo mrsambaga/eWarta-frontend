@@ -1,0 +1,67 @@
+@mixin font-footer {
+    font-family: 'Montserrat';
+    font-style: normal;
+    line-height: 24px;
+    letter-spacing: 0.2px;
+    list-style: none;
+}
+
+.footer {
+    display: flex;
+    width: 100%;
+    max-width: 1000px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    height: 250px;
+
+    &__title {
+
+        & h3 {
+            @include font-footer;
+            font-size: 60px;
+            font-weight: 700;
+            color: #4c4e4d;
+        }
+    }
+
+    &__content {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+        max-width: 250px;
+        row-gap: 0rem;
+
+        & p {
+            @include font-footer;
+            font-size: 16px;
+            font-weight: 400;
+            color: #4f7177;
+        }
+    }
+
+    &__sub-title {
+        text-align: right;
+
+        & h3 {
+            @include font-footer;
+            font-size: 25px;
+            font-weight: 600;
+            color: #4c4e4d;
+        }
+
+        & p {
+            @include font-footer;
+            font-size: 14px;
+            font-weight: 400;
+            color: #4f7177;
+        }
+    }
+}
+
+#app-footer {
+    margin-top: 100px;
+    background-color: #e9e7e8;
+    border-top: 3px solid #fff104;
+}
