@@ -6,7 +6,6 @@
     font-weight: 600;
     font-size: 20px;
     line-height: 24px;
-    text-align: center;
     letter-spacing: 0.2px;
     list-style: none;
 }
@@ -62,7 +61,7 @@
 
             .nav-link {
                 @include font-navbar-global;
-                color: var.$secondary-text-color;
+                color: var.$grey;
             }
         }
 
@@ -72,7 +71,7 @@
 
             .nav-link {
                 @include font-navbar-global;
-                color: var.$secondary-text-color;
+                color: var.$grey;
             }
         }
     }

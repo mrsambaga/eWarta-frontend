@@ -1,14 +1,6 @@
 import React, { useState } from "react";
 import "./Form.scss";
-
-type FormProps = {
-  placeholder: string;
-  inputType: string;
-  value?: string | number;
-  isReadOnly?: boolean;
-  onChangeHandler?: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  className: string;
-};
+import { FormProps } from "../../../constant/FormProps";
 
 const Form: React.FC<FormProps> = ({
   placeholder,

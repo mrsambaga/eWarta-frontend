@@ -2,7 +2,7 @@ import React from "react";
 import NewsCard from "../../atoms/NewsCard/NewsCard";
 import "./NewsContainer.scss";
 
-type NewsContainerDoubleProps = {
+type NewsContainerProps = {
   news: {
     img: string;
     alt: string;
@@ -12,10 +12,7 @@ type NewsContainerDoubleProps = {
   type: string;
 };
 
-const NewsContainerDouble: React.FC<NewsContainerDoubleProps> = ({
-  news,
-  type,
-}) => {
+const NewsContainer: React.FC<NewsContainerProps> = ({ news, type }) => {
   return (
     <div className={type}>
       {news.map((newsItem) => (
@@ -30,4 +27,4 @@ const NewsContainerDouble: React.FC<NewsContainerDoubleProps> = ({
   );
 };
 
-export default NewsContainerDouble;
+export default NewsContainer;

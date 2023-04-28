@@ -5,7 +5,7 @@ import peopleImg from "../../../img/people.png";
 import strikeImg from "../../../img/strike.png";
 import vaccineImg from "../../../img/vaccine.jpg";
 import tiktokeImg from "../../../img/tiktok.png";
-import NewsContainerDouble from "../../molecules/NewsContainer/NewsContainer";
+import NewsContainer from "../../molecules/NewsContainer/NewsContainer";
 
 const TopStories: React.FC = () => {
   return (
@@ -16,7 +16,7 @@ const TopStories: React.FC = () => {
         <div className="top-stories__title__line"></div>
       </div>
       <div className="top-stories__content">
-        <NewsContainerDouble
+        <NewsContainer
           news={[
             {
               img: gunsImg,
@@ -34,7 +34,7 @@ const TopStories: React.FC = () => {
           ]}
           type="double"
         />
-        <NewsContainerDouble
+        <NewsContainer
           news={[
             {
               img: vaccineImg,
@@ -46,7 +46,7 @@ const TopStories: React.FC = () => {
           ]}
           type="single"
         />
-        <NewsContainerDouble
+        <NewsContainer
           news={[
             {
               img: strikeImg,

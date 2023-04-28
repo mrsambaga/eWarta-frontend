@@ -1,11 +1,6 @@
 import React from "react";
 import "./Button.scss";
-
-type ButtonProps = {
-  label: string;
-  onClickHandler: () => void;
-  className: string;
-};
+import { ButtonProps } from "../../../constant/ButtonProps";
 
 const Button: React.FC<ButtonProps> = ({
   label,
