@@ -5,7 +5,7 @@ import Button from "../../atoms/Button/Button";
 import TitleBox from "../../atoms/TitleBox/TitleBox";
 
 const Navbar: React.FC = () => {
-  const [authenticated] = useState(true);
+  const [authenticated] = useState(false);
   const navigate = useNavigate();
   const onClickHandler = (link: string) => {
     navigate(`/${link}`);
@@ -35,31 +35,37 @@ const Navbar: React.FC = () => {
                       Subscription
                     </NavLink>
                   </li>
+                  <li className="navbar__list__item">
+                    <NavLink to="/" className={"nav-link"}>
+                      Home
+                    </NavLink>
+                  </li>
                 </>
               )}
-              <li
-                className={
-                  authenticated
-                    ? "navbar__list__item"
-                    : "navbar__list__item-single"
-                }
-              >
-                <NavLink to="/" className={"nav-link"}>
-                  Home
-                </NavLink>
-              </li>
             </ul>
             <div className="navbar__button">
-              <Button
-                label="Login"
-                className="auth"
-                onClickHandler={() => onClickHandler("login")}
-              ></Button>
-              <Button
-                label="Register"
-                className="auth"
-                onClickHandler={() => onClickHandler("register")}
-              ></Button>
+              {authenticated ? (
+                <>
+                  <Button
+                    label="Logout"
+                    className="auth"
+                    onClickHandler={() => onClickHandler("logout")}
+                  ></Button>
+                </>
+              ) : (
+                <>
+                  <Button
+                    label="Login"
+                    className="auth"
+                    onClickHandler={() => onClickHandler("login")}
+                  ></Button>
+                  <Button
+                    label="Register"
+                    className="auth"
+                    onClickHandler={() => onClickHandler("register")}
+                  ></Button>
+                </>
+              )}
             </div>
           </nav>
         </div>

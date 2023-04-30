@@ -5,16 +5,17 @@ import Card from "../../components/organisms/Card/Card";
 
 const Register: React.FC = () => {
   const registerForms: FormProps[] = [
-    { placeholder: "Name", inputType: "text", className: "auth-form" },
-    { placeholder: "Email Address", inputType: "text", className: "auth-form" },
-    { placeholder: "Password", inputType: "password", className: "auth-form" },
+    { placeholder: "Name", inputType: "text", className: "auth-form", name:"name" },
+    { placeholder: "Email Address", inputType: "text", className: "auth-form", name:"email" },
+    { placeholder: "Password", inputType: "password", className: "auth-form", name:"password" },
     {
       placeholder: "Password Confirm",
       inputType: "password",
       className: "auth-form",
+      name:"passwordConfirm"
     },
-    { placeholder: "Phone", inputType: "text", className: "auth-form" },
-    { placeholder: "Address", inputType: "text", className: "auth-form" },
+    { placeholder: "Phone", inputType: "text", className: "auth-form", name:"phone" },
+    { placeholder: "Address", inputType: "text", className: "auth-form", name:"address" },
   ];
 
   const registerHandler = () => {

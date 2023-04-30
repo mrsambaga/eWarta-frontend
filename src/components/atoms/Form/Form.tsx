@@ -6,19 +6,28 @@ const Form: React.FC<FormProps> = ({
   placeholder,
   value,
   inputType,
-  onChangeHandler,
+  onChangeProp,
   isReadOnly = false,
   className,
+  name,
 }) => {
-  const [, setActivity] = useState(value);
-  const [, setShowError] = useState(false);
+  const [activity, setActivity] = useState(value);
+  const [showError, setShowError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value;
     setActivity(newValue);
     setShowError(false);
-    if (onChangeHandler) {
-      onChangeHandler(event);
+    if (onChangeProp) {
+      onChangeProp(event);
+    }
+  };
+
+  const handleBlur = () => {
+    if (!activity) {
+      setErrorMessage("This field is required");
+      setShowError(true);
     }
   };
 
@@ -27,11 +36,15 @@ const Form: React.FC<FormProps> = ({
       <input
         type={inputType}
         placeholder={placeholder}
-        value={value}
+        value={activity}
         onChange={handleOnChange}
         className={className}
         readOnly={isReadOnly}
+        onBlur={handleBlur}
+        id={showError ? "show-error" : ""}
+        name={name}
       />
+      {showError && <div className="form__error">{errorMessage}</div>}
     </div>
   );
 };
