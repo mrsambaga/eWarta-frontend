@@ -3,8 +3,10 @@ import Card from "../../components/organisms/Card/Card";
 import { FormProps } from "../../constant/FormProps";
 import { ButtonProps } from "../../constant/ButtonProps";
 import useFetchPost from "../../hooks/UseFetchPost";
-import { SetCookie } from "../../utils/Cookies/Cookies";
-import { notifyError } from "../../components/atoms/Toastify/Toastify";
+import {
+  NotifContainer,
+  notifyError,
+} from "../../components/atoms/Toastify/Toastify";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../../store/AuthSlice";
@@ -47,12 +49,11 @@ const Login: React.FC = () => {
 
   useEffect(() => {
     if (error != null) {
-      console.log(error.response.data.message);
       notifyError(error.response?.data?.message || error.message);
     } else if (out != null) {
-      console.log(out.data);
-      SetCookie("token", out.data.token, 1);
-      dispatch(authActions.login);
+      const token = out.data.token;
+      const expiredHour = 1;
+      dispatch(authActions.login({ token, expiredHour }));
       navigate(`/`);
     }
 
@@ -85,13 +86,16 @@ const Login: React.FC = () => {
   };
 
   return (
-    <Card
-      title="Login"
-      subTitle="Login to your eWarta account"
-      detail="Don't have an account ? Register"
-      forms={loginForms}
-      button={loginButton}
-    />
+    <>
+      <Card
+        title="Login"
+        subTitle="Login to your eWarta account"
+        detail="Don't have an account ? Register"
+        forms={loginForms}
+        button={loginButton}
+      />
+      <NotifContainer />
+    </>
   );
 };
 

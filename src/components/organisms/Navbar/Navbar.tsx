@@ -1,14 +1,24 @@
-import React, { useState } from "react";
+import React from "react";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import "./Navbar.scss";
 import Button from "../../atoms/Button/Button";
 import TitleBox from "../../atoms/TitleBox/TitleBox";
+import { useDispatch, useSelector } from "react-redux";
+import { authActions } from "../../../store/AuthSlice";
+import { RootState } from "../../../store/Index";
 
 const Navbar: React.FC = () => {
-  const [authenticated] = useState(false);
+  const { isAuthenticated } = useSelector((state: RootState) => state.auth);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const onClickHandler = (link: string) => {
     navigate(`/${link}`);
+  };
+
+  const logOutHandler = () => {
+    dispatch(authActions.logout());
+    navigate("/login");
   };
 
   return (
@@ -18,7 +28,7 @@ const Navbar: React.FC = () => {
           <nav className="navbar__container__nav">
             <TitleBox label="eWarta" className="title"></TitleBox>
             <ul className="navbar__list">
-              {authenticated && (
+              {isAuthenticated && (
                 <>
                   <li className="navbar__list__item">
                     <NavLink to="/profile" className={"nav-link"}>
@@ -44,12 +54,12 @@ const Navbar: React.FC = () => {
               )}
             </ul>
             <div className="navbar__button">
-              {authenticated ? (
+              {isAuthenticated ? (
                 <>
                   <Button
                     label="Logout"
                     className="auth"
-                    onClickHandler={() => onClickHandler("logout")}
+                    onClickHandler={logOutHandler}
                   ></Button>
                 </>
               ) : (

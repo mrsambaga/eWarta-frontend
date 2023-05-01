@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { registerFormActions } from "../../store/RegisterFormSlice";
 import {
+  NotifContainer,
   notifyError,
   notifySuccess,
 } from "../../components/atoms/Toastify/Toastify";
@@ -112,13 +113,16 @@ const Register: React.FC = () => {
   };
 
   return (
-    <Card
-      title="Register"
-      subTitle="Create your eWarta account"
-      detail="Already have an account ? Log in. "
-      forms={registerForms}
-      button={registerButton}
-    />
+    <>
+      <Card
+        title="Register"
+        subTitle="Create your eWarta account"
+        detail="Already have an account ? Log in. "
+        forms={registerForms}
+        button={registerButton}
+      />
+      <NotifContainer />
+    </>
   );
 };
 

@@ -1,14 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { GetCookie } from "../utils/Cookies/Cookies";
+import { GetCookie, SetCookie } from "../utils/Cookies/Cookies";
 
 const authSlice = createSlice({
     name:'auth',
     initialState: { isAuthenticated: GetCookie('token') ? true : false },
     reducers: {
-        login(state) {
+        login(state, actions) {
+            const { token, expiredHour } = actions.payload
+            SetCookie("token", token, expiredHour)
             state.isAuthenticated = true;
         },
         logout(state) {
+            SetCookie('token', '', 0);
             state.isAuthenticated = false;
         },
     }
