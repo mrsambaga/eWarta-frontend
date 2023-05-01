@@ -12,10 +12,12 @@ import {
   notifySuccess,
 } from "../../components/atoms/Toastify/Toastify";
 import useFetchPost from "../../hooks/UseFetchPost";
+import { Navigate } from "react-router-dom";
 
 const Register: React.FC = () => {
   const { name, email, password, passwordConfirm, phone, address } =
     useSelector((state: RootState) => state.registerForm);
+  const { isAuthenticated } = useSelector((state: RootState) => state.auth);
 
   const [submit, setSubmit] = useState(false);
   const dispatch = useDispatch();
@@ -114,14 +116,20 @@ const Register: React.FC = () => {
 
   return (
     <>
-      <Card
-        title="Register"
-        subTitle="Create your eWarta account"
-        detail="Already have an account ? Log in. "
-        forms={registerForms}
-        button={registerButton}
-      />
-      <NotifContainer />
+      {isAuthenticated ? (
+        <Navigate to="/" replace />
+      ) : (
+        <>
+          <Card
+            title="Register"
+            subTitle="Create your eWarta account"
+            detail="Already have an account ? Log in. "
+            forms={registerForms}
+            button={registerButton}
+          />
+          <NotifContainer />
+        </>
+      )}
     </>
   );
 };

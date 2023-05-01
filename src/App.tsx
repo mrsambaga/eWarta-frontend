@@ -33,10 +33,10 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route element={<Navbar />}>
-          <Route path="/" element={<Home />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route element={<PrivateRoutes />}>
+            <Route path="/" element={<Home />} />
             <Route path="/test" element={<TestPage />} />
           </Route>
         </Route>

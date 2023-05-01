@@ -7,7 +7,7 @@ import {
   NotifContainer,
   notifyError,
 } from "../../components/atoms/Toastify/Toastify";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../../store/AuthSlice";
 import { loginFormActions } from "../../store/LoginFormSlice";
@@ -15,8 +15,10 @@ import { RootState } from "../../store/Index";
 import { LoginForm } from "../../constant/FormProps";
 
 const Login: React.FC = () => {
-  const formData = useSelector((state: RootState) => state.loginForm);
-  const { email, password } = formData;
+  const { email, password } = useSelector(
+    (state: RootState) => state.loginForm
+  );
+  const { isAuthenticated } = useSelector((state: RootState) => state.auth);
 
   const [submit, setSubmit] = useState(false);
   const navigate = useNavigate();
@@ -87,14 +89,20 @@ const Login: React.FC = () => {
 
   return (
     <>
-      <Card
-        title="Login"
-        subTitle="Login to your eWarta account"
-        detail="Don't have an account ? Register"
-        forms={loginForms}
-        button={loginButton}
-      />
-      <NotifContainer />
+      {isAuthenticated ? (
+        <Navigate to="/" replace />
+      ) : (
+        <>
+          <Card
+            title="Login"
+            subTitle="Login to your eWarta account"
+            detail="Don't have an account ? Register"
+            forms={loginForms}
+            button={loginButton}
+          />
+          <NotifContainer />
+        </>
+      )}
     </>
   );
 };
