@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const registerFormSlice = createSlice({
     name:'registerForm',
-    initialState: { name: '', email: '', password: '',  passwordConfirm: '', phone: '', address: '' },
+    initialState: { name: '', email: '', password: '',  passwordConfirm: '', phone: '', address: '', referral: '', },
     reducers: {
         updateRegisterForm: (state, actions) => {
             const {name, value } = actions.payload;

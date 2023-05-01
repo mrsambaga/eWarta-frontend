@@ -16,7 +16,7 @@ import { Navigate } from "react-router-dom";
 import { registerSchema } from "../../utils/Validation/RegisterValidation";
 
 const Register: React.FC = () => {
-  const { name, email, password, passwordConfirm, phone, address } =
+  const { name, email, password, passwordConfirm, phone, address, referral } =
     useSelector((state: RootState) => state.registerForm);
   const { isAuthenticated } = useSelector((state: RootState) => state.auth);
 
@@ -78,6 +78,14 @@ const Register: React.FC = () => {
       name: "address",
       onChangeProp: handleRegisterFormChange,
       value: address,
+    },
+    {
+      placeholder: "Referral",
+      inputType: "text",
+      className: "auth-form",
+      name: "address",
+      onChangeProp: handleRegisterFormChange,
+      value: referral,
     },
   ];
 
