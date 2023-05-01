@@ -13,6 +13,7 @@ import {
 } from "../../components/atoms/Toastify/Toastify";
 import useFetchPost from "../../hooks/UseFetchPost";
 import { Navigate } from "react-router-dom";
+import { registerSchema } from "../../utils/Validation/RegisterValidation";
 
 const Register: React.FC = () => {
   const { name, email, password, passwordConfirm, phone, address } =
@@ -36,6 +37,7 @@ const Register: React.FC = () => {
       className: "auth-form",
       name: "name",
       onChangeProp: handleRegisterFormChange,
+      value: name,
     },
     {
       placeholder: "Email Address",
@@ -43,6 +45,7 @@ const Register: React.FC = () => {
       className: "auth-form",
       name: "email",
       onChangeProp: handleRegisterFormChange,
+      value: email,
     },
     {
       placeholder: "Password",
@@ -50,6 +53,7 @@ const Register: React.FC = () => {
       className: "auth-form",
       name: "password",
       onChangeProp: handleRegisterFormChange,
+      value: password,
     },
     {
       placeholder: "Password Confirm",
@@ -57,6 +61,7 @@ const Register: React.FC = () => {
       className: "auth-form",
       name: "passwordConfirm",
       onChangeProp: handleRegisterFormChange,
+      value: passwordConfirm,
     },
     {
       placeholder: "Phone",
@@ -64,6 +69,7 @@ const Register: React.FC = () => {
       className: "auth-form",
       name: "phone",
       onChangeProp: handleRegisterFormChange,
+      value: phone,
     },
     {
       placeholder: "Address",
@@ -71,6 +77,7 @@ const Register: React.FC = () => {
       className: "auth-form",
       name: "address",
       onChangeProp: handleRegisterFormChange,
+      value: address,
     },
   ];
 
@@ -92,7 +99,6 @@ const Register: React.FC = () => {
 
   useEffect(() => {
     if (error != null) {
-      console.log(error.response.data.message);
       notifyError(error.response?.data?.message || error.message);
     } else if (out != null) {
       notifySuccess(out.message);
@@ -102,10 +108,14 @@ const Register: React.FC = () => {
   }, [out, error]);
 
   const submitHandler = () => {
-    console.log(name, email, password, passwordConfirm, phone, address);
-    if (!submit) {
-      setSubmit(true);
-    }
+    registerSchema
+      .validate(body)
+      .then(() => {
+        setSubmit(true);
+      })
+      .catch((error) => {
+        notifyError(error.message);
+      });
   };
 
   const registerButton: ButtonProps = {

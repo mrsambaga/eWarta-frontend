@@ -13,6 +13,7 @@ import { authActions } from "../../store/AuthSlice";
 import { loginFormActions } from "../../store/LoginFormSlice";
 import { RootState } from "../../store/Index";
 import { LoginForm } from "../../constant/FormProps";
+import { loginSchema } from "../../utils/Validation/LoginValidation";
 
 const Login: React.FC = () => {
   const { email, password } = useSelector(
@@ -24,10 +25,15 @@ const Login: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const loginHandler = () => {
-    if (!submit) {
-      setSubmit(true);
-    }
+  const handleLoginSubmit = () => {
+    loginSchema
+      .validate(body)
+      .then(() => {
+        setSubmit(true);
+      })
+      .catch((error) => {
+        notifyError(error.message);
+      });
   };
 
   const handleLoginFormChange = (
@@ -83,7 +89,7 @@ const Login: React.FC = () => {
 
   const loginButton: ButtonProps = {
     label: "Login",
-    onClickHandler: loginHandler,
+    onClickHandler: handleLoginSubmit,
     className: "login",
   };
 
