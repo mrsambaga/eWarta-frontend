@@ -16,6 +16,7 @@ import { useSelector } from "react-redux";
 import TestPage from "./pages/TestPage/TestPage";
 import { RootState } from "./store/Index";
 import Unauthenticated from "./pages/Unauthenticated/Unauthenticated";
+import NotFound from "./pages/NotFound/NotFound";
 
 function App() {
   const PrivateRoutes = () => {
@@ -40,7 +41,7 @@ function App() {
             <Route path="/test" element={<TestPage />} />
           </Route>
         </Route>
-        <Route path="*" element={<h1>404 : Page Not Found</h1>}></Route>
+        <Route path="*" element={<NotFound />}></Route>
         <Route path="/unauthenticated" element={<Unauthenticated />}></Route>
       </Routes>
       <Footer />
