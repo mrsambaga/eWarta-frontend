@@ -10,6 +10,7 @@ const Form: React.FC<FormProps> = ({
   isReadOnly = false,
   className,
   name,
+  validate
 }) => {
   const [activity, setActivity] = useState(value);
   const [showError, setShowError] = useState(false);
@@ -25,7 +26,7 @@ const Form: React.FC<FormProps> = ({
   };
 
   const handleBlur = () => {
-    if (!activity) {
+    if (validate && !activity) {
       setErrorMessage("This field is required");
       setShowError(true);
     }

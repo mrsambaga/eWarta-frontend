@@ -6,6 +6,7 @@ export type FormProps = {
     onChangeProp?: (event: React.ChangeEvent<HTMLInputElement>) => void;
     className: string;
     name: string;
+    validate: boolean;
   };
 
   export type LoginForm = {
@@ -20,4 +21,5 @@ export type FormProps = {
     password_confirm: string;
     phone: string;
     address: string;
+    ref_referral: string;
   };

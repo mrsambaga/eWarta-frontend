@@ -76,6 +76,7 @@ const Login: React.FC = () => {
       onChangeProp: handleLoginFormChange,
       value: email,
       name: "email",
+      validate: true,
     },
     {
       placeholder: "Password",
@@ -84,6 +85,7 @@ const Login: React.FC = () => {
       onChangeProp: handleLoginFormChange,
       value: password,
       name: "password",
+      validate: true,
     },
   ];
 

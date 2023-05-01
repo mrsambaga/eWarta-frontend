@@ -38,6 +38,7 @@ const Register: React.FC = () => {
       name: "name",
       onChangeProp: handleRegisterFormChange,
       value: name,
+      validate: true,
     },
     {
       placeholder: "Email Address",
@@ -46,6 +47,7 @@ const Register: React.FC = () => {
       name: "email",
       onChangeProp: handleRegisterFormChange,
       value: email,
+      validate: true,
     },
     {
       placeholder: "Password",
@@ -54,6 +56,7 @@ const Register: React.FC = () => {
       name: "password",
       onChangeProp: handleRegisterFormChange,
       value: password,
+      validate: true,
     },
     {
       placeholder: "Password Confirm",
@@ -62,6 +65,7 @@ const Register: React.FC = () => {
       name: "passwordConfirm",
       onChangeProp: handleRegisterFormChange,
       value: passwordConfirm,
+      validate: true,
     },
     {
       placeholder: "Phone",
@@ -70,6 +74,7 @@ const Register: React.FC = () => {
       name: "phone",
       onChangeProp: handleRegisterFormChange,
       value: phone,
+      validate: true,
     },
     {
       placeholder: "Address",
@@ -78,14 +83,16 @@ const Register: React.FC = () => {
       name: "address",
       onChangeProp: handleRegisterFormChange,
       value: address,
+      validate: true,
     },
     {
       placeholder: "Referral",
       inputType: "text",
       className: "auth-form",
-      name: "address",
+      name: "referral",
       onChangeProp: handleRegisterFormChange,
       value: referral,
+      validate: false,
     },
   ];
 
@@ -96,6 +103,7 @@ const Register: React.FC = () => {
     password_confirm: passwordConfirm,
     phone: phone,
     address: address,
+    ref_referral: referral,
   };
 
   const { out, error } = useFetchPost(
@@ -106,9 +114,14 @@ const Register: React.FC = () => {
   );
 
   useEffect(() => {
+    console.log(out);
     if (error != null) {
       notifyError(error.response?.data?.message || error.message);
     } else if (out != null) {
+      if (out.code === "ERROR_CREATED") {
+        notifyError(out.message);
+        return;
+      }
       notifySuccess(out.message);
     }
 
