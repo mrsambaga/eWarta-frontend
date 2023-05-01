@@ -1,9 +1,10 @@
 import React from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import "./Toastify.scss";
 
 export const notifySuccess = (data: string): void => {
-  toast.success(`${data} successfully registered`, {
+  toast.success(data, {
     position: "top-center",
     autoClose: 3000,
     hideProgressBar: false,
