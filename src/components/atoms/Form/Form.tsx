@@ -38,10 +38,9 @@ const Form: React.FC<FormProps> = ({
         placeholder={placeholder}
         value={activity}
         onChange={handleOnChange}
-        className={className}
+        className={`${className} ${showError ? "show-error" : ""}`}
         readOnly={isReadOnly}
         onBlur={handleBlur}
-        id={showError ? "show-error" : ""}
         name={name}
       />
       {showError && <div className="form__error">{errorMessage}</div>}

@@ -24,6 +24,7 @@ const useFetchGet = <T>(
         const config = { headers };
         const response = await axios.get(url, config);
         setOut(response?.data);
+        setError(null);
       } catch (error) {
         const err = error as AxiosError | null;
         setError(err);

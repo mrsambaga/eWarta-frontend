@@ -15,8 +15,9 @@ type NewsContainerProps = {
 const NewsContainer: React.FC<NewsContainerProps> = ({ news, type }) => {
   return (
     <div className={type}>
-      {news.map((newsItem) => (
+      {news.map((newsItem, index) => (
         <NewsCard
+          key={index}
           img={newsItem.img}
           alt={newsItem.alt}
           title={newsItem.title}

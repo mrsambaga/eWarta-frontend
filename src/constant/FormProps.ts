@@ -7,3 +7,17 @@ export type FormProps = {
     className: string;
     name: string;
   };
+
+  export type LoginForm = {
+    email: string;
+    password: string;
+  };
+
+  export type RegisterForm = {
+    name: string;
+    email: string;
+    password: string;
+    password_confirm: string;
+    phone: string;
+    address: string;
+  };

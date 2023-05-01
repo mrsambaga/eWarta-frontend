@@ -10,12 +10,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../../store/AuthSlice";
 import { loginFormActions } from "../../store/LoginFormSlice";
 import { RootState } from "../../store/Index";
+import { LoginForm } from "../../constant/FormProps";
 
 const Login: React.FC = () => {
-  const email = useSelector((state: RootState) => state.loginForm.email);
-  const password = useSelector((state: RootState) => state.loginForm.password);
+  const formData = useSelector((state: RootState) => state.loginForm);
+  const { email, password } = formData;
+
   const [submit, setSubmit] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const loginHandler = () => {
     if (!submit) {
@@ -28,13 +31,6 @@ const Login: React.FC = () => {
   ) => {
     const { name, value } = event.target;
     dispatch(loginFormActions.updateLoginForm({ name, value }));
-    console.log(name, value);
-    console.log(email, password);
-  };
-
-  type LoginForm = {
-    email: string;
-    password: string;
   };
 
   const body: LoginForm = {
@@ -49,12 +45,12 @@ const Login: React.FC = () => {
     () => setSubmit(false)
   );
 
-  const dispatch = useDispatch();
-
   useEffect(() => {
     if (error != null) {
+      console.log(error.response.data.message);
       notifyError(error.response?.data?.message || error.message);
     } else if (out != null) {
+      console.log(out.data);
       SetCookie("token", out.data.token, 1);
       dispatch(authActions.login);
       navigate(`/`);
