@@ -35,3 +35,12 @@
     border: none;
     border-radius: 7px;
 }
+
+.subscribe {
+    @include font;
+    width: 150px;
+    height: 30px;
+    border: none;
+    background-color: #ffec00;
+    font-size: 18px;
+}
