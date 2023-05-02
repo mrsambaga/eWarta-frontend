@@ -1,12 +1,17 @@
 import React from "react";
 
-type NewsCardProps = {
+type NewsCardPrimaryProps = {
   img: string;
   alt: string;
   title: string;
   desc: string;
 };
-const NewsCard: React.FC<NewsCardProps> = ({ img, title, desc, alt }) => {
+const NewsCardPrimary: React.FC<NewsCardPrimaryProps> = ({
+  img,
+  title,
+  desc,
+  alt,
+}) => {
   return (
     <div>
       <img src={img} alt={alt} />
@@ -16,4 +21,4 @@ const NewsCard: React.FC<NewsCardProps> = ({ img, title, desc, alt }) => {
   );
 };
 
-export default NewsCard;
+export default NewsCardPrimary;

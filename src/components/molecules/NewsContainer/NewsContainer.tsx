@@ -1,6 +1,7 @@
 import React from "react";
-import NewsCard from "../../atoms/NewsCard/NewsCard";
 import "./NewsContainer.scss";
+import NewsCardPrimary from "../../atoms/NewsCard/NewsCardPrimary";
+import NewsCardSecondary from "../../atoms/NewsCard/NewsCardSecondary";
 
 type NewsContainerProps = {
   news: {
@@ -9,14 +10,32 @@ type NewsContainerProps = {
     title: string;
     desc: string;
   }[];
+  className: string;
   type: string;
 };
 
-const NewsContainer: React.FC<NewsContainerProps> = ({ news, type }) => {
+const NewsContainer: React.FC<NewsContainerProps> = ({
+  news,
+  className,
+  type,
+}) => {
+  const getCardComponent = (type: string) => {
+    switch (type) {
+      case "primary":
+        return NewsCardPrimary;
+      case "secondary":
+        return NewsCardSecondary;
+      default:
+        return NewsCardPrimary;
+    }
+  };
+
+  const CardComponent = getCardComponent(type);
+
   return (
-    <div className={type}>
+    <div className={className}>
       {news.map((newsItem, index) => (
-        <NewsCard
+        <CardComponent
           key={index}
           img={newsItem.img}
           alt={newsItem.alt}

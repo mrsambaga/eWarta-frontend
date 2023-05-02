@@ -32,7 +32,8 @@ const TopStories: React.FC = () => {
               desc: "An adapted excerpt from Lane Moore’s You Will Find Your People: How to Make Meaningful Friendships as an Adult.",
             },
           ]}
-          type="double"
+          className="double"
+          type="primary"
         />
         <NewsContainer
           news={[
@@ -44,7 +45,8 @@ const TopStories: React.FC = () => {
               desc: "There’s still a long way to go, but RNA vaccines might help in the fight against malaria.",
             },
           ]}
-          type="single"
+          className="single"
+          type="primary"
         />
         <NewsContainer
           news={[
@@ -61,7 +63,8 @@ const TopStories: React.FC = () => {
               desc: "And remember the Mannequin Challenge? Yep, they used that too.",
             },
           ]}
-          type="double"
+          className="double"
+          type="primary"
         />
       </div>
     </div>
