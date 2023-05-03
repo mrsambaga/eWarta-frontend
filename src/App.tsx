@@ -17,6 +17,7 @@ import TestPage from "./pages/TestPage/TestPage";
 import { RootState } from "./store/Index";
 import Unauthenticated from "./pages/Unauthenticated/Unauthenticated";
 import NotFound from "./pages/NotFound/NotFound";
+import Detail from "./pages/Detail/Detail";
 
 function App() {
   const PrivateRoutes = () => {
@@ -38,6 +39,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route element={<PrivateRoutes />}>
             <Route path="/" element={<Home />} />
+            <Route path="/news/:id" element={<Detail />} />
             <Route path="/test" element={<TestPage />} />
           </Route>
         </Route>

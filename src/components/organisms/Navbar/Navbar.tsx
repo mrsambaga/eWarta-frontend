@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink, Outlet, useNavigate } from "react-router-dom";
+import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 import "./Navbar.scss";
 import Button from "../../atoms/Button/Button";
 import TitleBox from "../../atoms/TitleBox/TitleBox";
@@ -26,7 +26,9 @@ const Navbar: React.FC = () => {
       <div className="navbar">
         <div className="navbar__container">
           <nav className="navbar__container__nav">
-            <TitleBox label="eWarta" className="title"></TitleBox>
+            <Link to={"/"} className="title-link">
+              <TitleBox label="eWarta" className="title"></TitleBox>
+            </Link>
             <ul className="navbar__list">
               {isAuthenticated && (
                 <>
@@ -43,11 +45,6 @@ const Navbar: React.FC = () => {
                   <li className="navbar__list__item">
                     <NavLink to="/subscription" className={"nav-link"}>
                       Subscription
-                    </NavLink>
-                  </li>
-                  <li className="navbar__list__item">
-                    <NavLink to="/" className={"nav-link"}>
-                      Home
                     </NavLink>
                   </li>
                 </>

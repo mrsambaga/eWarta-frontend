@@ -1,0 +1,28 @@
+.detail {
+    width: 100%;
+    max-width: 1000px;
+    display: flex;
+    flex-direction: column;
+    margin: 50px;
+    height: 500px;
+
+    &__title {
+        background-color: red;
+    }
+
+    &__main-section {
+        background-color: yellow;
+        display: flex;
+        height: 100%;
+
+        &__left {
+            background-color: green;
+            width: 70%;
+        }
+
+        &__right{
+            background-color: blue;
+            width: 30%;
+        }
+    }
+}

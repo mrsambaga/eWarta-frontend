@@ -19,6 +19,7 @@ const TopStories: React.FC = () => {
         <NewsContainer
           news={[
             {
+              id: 90,
               img: gunsImg,
               alt: "guns",
               title:
@@ -27,6 +28,7 @@ const TopStories: React.FC = () => {
               author: "test",
             },
             {
+              id: 91,
               img: peopleImg,
               alt: "people",
               title: "How to find your people",
@@ -40,6 +42,7 @@ const TopStories: React.FC = () => {
         <NewsContainer
           news={[
             {
+              id: 92,
               img: vaccineImg,
               alt: "vaccine",
               title:
@@ -54,6 +57,7 @@ const TopStories: React.FC = () => {
         <NewsContainer
           news={[
             {
+              id: 93,
               img: strikeImg,
               alt: "strike",
               title: "What happens if there’s a Hollywood writers strike?",
@@ -61,6 +65,7 @@ const TopStories: React.FC = () => {
               author: "test",
             },
             {
+              id: 94,
               img: tiktokeImg,
               alt: "tiktok",
               title: "How TikTok dances trained an AI to see",

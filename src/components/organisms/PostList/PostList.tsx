@@ -102,6 +102,7 @@ const PostList: React.FC = () => {
       console.log(out);
       const NewsHighlight: NewsHighlight[] = out.data.map((item) => {
         return {
+          id: item.post_id,
           title: item.title,
           desc: item.summary_desc,
           img: item.img_url,

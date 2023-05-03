@@ -1,5 +1,6 @@
 
 export type NewsHighlightResponse = {
+    post_id: number
     title: string
     summary_desc: string
     img_url : string
@@ -7,6 +8,7 @@ export type NewsHighlightResponse = {
 }
 
 export type NewsHighlight = {
+    id: number
     title: string
     desc: string
     img : string

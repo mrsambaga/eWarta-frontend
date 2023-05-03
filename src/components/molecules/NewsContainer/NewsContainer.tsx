@@ -5,6 +5,7 @@ import NewsCardSecondary from "../../atoms/NewsCard/NewsCardSecondary";
 
 type NewsContainerProps = {
   news: {
+    id: number;
     img: string;
     alt: string;
     title: string;
@@ -35,9 +36,10 @@ const NewsContainer: React.FC<NewsContainerProps> = ({
 
   return (
     <div className={className}>
-      {news.map((newsItem, index) => (
+      {news.map((newsItem) => (
         <CardComponent
-          key={index}
+          key={newsItem.id}
+          id={newsItem.id}
           img={newsItem.img}
           alt={newsItem.alt}
           title={newsItem.title}

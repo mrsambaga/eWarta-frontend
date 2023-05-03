@@ -1,7 +1,9 @@
 import React from "react";
 import "./NewsCard.scss";
+import { Link } from "react-router-dom";
 
 type NewsCardSecondaryProps = {
+  id: number;
   img: string;
   alt: string;
   title: string;
@@ -9,6 +11,7 @@ type NewsCardSecondaryProps = {
   author: string;
 };
 const NewsCardSecondary: React.FC<NewsCardSecondaryProps> = ({
+  id,
   img,
   title,
   desc,
@@ -18,10 +21,14 @@ const NewsCardSecondary: React.FC<NewsCardSecondaryProps> = ({
   return (
     <div className="card-secondary">
       <div className="card-secondary__img">
-        <img src={img} alt={alt} />
+        <Link to={`/news/${id}`} className="link">
+          <img src={img} alt={alt} />
+        </Link>
       </div>
       <div className="card-secondary__text">
-        <h3>{title}</h3>
+        <Link to={`/news/${id}`} className="link">
+          <h3>{title}</h3>
+        </Link>
         <p>{desc}</p>
         <p>
           By : <span className="author-name">{author}</span>

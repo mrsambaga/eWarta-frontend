@@ -82,4 +82,14 @@
         padding: 20px;
     }
 
+    .title-link {
+        text-decoration: none;
+        color: #333;
+        height: 100%;
+    
+        &:hover {
+          text-decoration: none;
+        }    
+    }
+
 }
