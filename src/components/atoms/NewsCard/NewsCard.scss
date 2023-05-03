@@ -1,8 +1,25 @@
+@mixin font-title {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    letter-spacing: 0.1px;
+    color: #454745;
+}
+
+@mixin font {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    letter-spacing: 0.1px;
+    color: #454745;
+}
+
 .card-secondary {
     display: flex;
     gap: 1rem;
     padding-top: 1px;
-    border-top: 2px solid #d1d1d1;
 
     &__img {
         width: 30%;
@@ -11,5 +28,34 @@
     &__text {
         width: 70%;
         padding-top: 5px;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+
+        & h3 {
+            @include font-title;
+        }
+
+        & p {
+            @include font
+        }
+
+        .author-name {
+            color: #4f7177 !important;
+        }
+    }
+}
+
+.card-primary {
+    & h3 {
+        @include font-title;
+    }
+
+    & p {
+        @include font
+    }
+
+    .author-name {
+        color: #4f7177 !important;
     }
 }

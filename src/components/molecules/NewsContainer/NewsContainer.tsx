@@ -9,6 +9,7 @@ type NewsContainerProps = {
     alt: string;
     title: string;
     desc: string;
+    author: string;
   }[];
   className: string;
   type: string;
@@ -41,6 +42,7 @@ const NewsContainer: React.FC<NewsContainerProps> = ({
           alt={newsItem.alt}
           title={newsItem.title}
           desc={newsItem.desc}
+          author={newsItem.author}
         />
       ))}
     </div>

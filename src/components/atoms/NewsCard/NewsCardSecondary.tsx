@@ -6,12 +6,14 @@ type NewsCardSecondaryProps = {
   alt: string;
   title: string;
   desc: string;
+  author: string;
 };
 const NewsCardSecondary: React.FC<NewsCardSecondaryProps> = ({
   img,
   title,
   desc,
   alt,
+  author,
 }) => {
   return (
     <div className="card-secondary">
@@ -21,6 +23,9 @@ const NewsCardSecondary: React.FC<NewsCardSecondaryProps> = ({
       <div className="card-secondary__text">
         <h3>{title}</h3>
         <p>{desc}</p>
+        <p>
+          By : <span className="author-name">{author}</span>
+        </p>
       </div>
     </div>
   );

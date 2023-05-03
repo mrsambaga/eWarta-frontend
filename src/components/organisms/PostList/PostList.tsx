@@ -38,6 +38,7 @@ const PostList: React.FC = () => {
           desc: item.summary_desc,
           img: item.img_url,
           alt: item.title,
+          author: item.author,
         };
       });
 

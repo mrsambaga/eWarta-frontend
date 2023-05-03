@@ -3,6 +3,7 @@ export type NewsHighlightResponse = {
     title: string
     summary_desc: string
     img_url : string
+    author : string
 }
 
 export type NewsHighlight = {
@@ -10,4 +11,5 @@ export type NewsHighlight = {
     desc: string
     img : string
     alt? : string
+    author: string
 }

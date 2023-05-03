@@ -24,12 +24,14 @@ const TopStories: React.FC = () => {
               title:
                 "America isn’t protecting its kids and teens from gun violence",
               desc: "A shooting at a Texas prom party highlights the huge toll of gun violence on kids and teens in the US.",
+              author: "test",
             },
             {
               img: peopleImg,
               alt: "people",
               title: "How to find your people",
               desc: "An adapted excerpt from Lane Moore’s You Will Find Your People: How to Make Meaningful Friendships as an Adult.",
+              author: "test",
             },
           ]}
           className="double"
@@ -43,6 +45,7 @@ const TopStories: React.FC = () => {
               title:
                 "How new vaccine technologies could reduce the massive death toll from malaria",
               desc: "There’s still a long way to go, but RNA vaccines might help in the fight against malaria.",
+              author: "test",
             },
           ]}
           className="single"
@@ -55,12 +58,14 @@ const TopStories: React.FC = () => {
               alt: "strike",
               title: "What happens if there’s a Hollywood writers strike?",
               desc: "It’s been 15 years since the last WGA strike, and the stakes are far greater.",
+              author: "test",
             },
             {
               img: tiktokeImg,
               alt: "tiktok",
               title: "How TikTok dances trained an AI to see",
               desc: "And remember the Mannequin Challenge? Yep, they used that too.",
+              author: "test",
             },
           ]}
           className="double"
