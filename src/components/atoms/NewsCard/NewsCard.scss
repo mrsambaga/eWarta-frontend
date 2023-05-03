@@ -47,15 +47,9 @@
 }
 
 .card-primary {
-    & h3 {
-        @include font-title;
-    }
-
-    & p {
-        @include font
-    }
 
     .author-name {
         color: #4f7177 !important;
     }
+
 }

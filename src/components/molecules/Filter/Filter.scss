@@ -1,0 +1,18 @@
+@mixin font-title {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 700;
+    letter-spacing: 0.1px;
+    color: #4c4e4d;
+}
+
+.filter-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    & h3 {
+        @include font-title;
+        font-size: 20px;
+    }
+}

@@ -86,7 +86,7 @@ const Register: React.FC = () => {
       validate: true,
     },
     {
-      placeholder: "Referral",
+      placeholder: "Referral (optional)",
       inputType: "text",
       className: "auth-form",
       name: "referral",

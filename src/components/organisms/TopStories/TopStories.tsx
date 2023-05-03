@@ -12,7 +12,7 @@ const TopStories: React.FC = () => {
     <div className="top-stories">
       <div className="top-stories__title">
         <div className="top-stories__title__line"></div>
-        <h3>Top Stories</h3>
+        <h3>TOP STORIES</h3>
         <div className="top-stories__title__line"></div>
       </div>
       <div className="top-stories__content">

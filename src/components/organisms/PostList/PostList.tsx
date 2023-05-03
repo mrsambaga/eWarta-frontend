@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./PostList.scss";
 import NewsContainer from "../../molecules/NewsContainer/NewsContainer";
 import useFetchGet from "../../../hooks/UseFetchGet";
@@ -11,6 +11,8 @@ import { notifyError } from "../../atoms/Toastify/Toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { newsHighlightActions } from "../../../store/NewsHighlightSlice";
 import { RootState } from "../../../store/Index";
+import Filter from "../../molecules/Filter/Filter";
+import { FormProps } from "../../../constant/FormProps";
 
 const PostList: React.FC = () => {
   const { newsHighlight } = useSelector(
@@ -48,10 +50,28 @@ const PostList: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [out, error]);
 
+  const [titleFilter, setTitleFilter] = useState("");
+
+  const handleFilterFormChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setTitleFilter(event.target.value);
+  };
+
+  const filterProps: FormProps = {
+    placeholder: "Search by title",
+    inputType: "text",
+    className: "filter-form",
+    onChangeProp: handleFilterFormChange,
+    value: titleFilter,
+    name: "titleFilter",
+    validate: false,
+  };
+
   return (
     <div className="post-list">
       <div className="post-list__title">
-        <h3>More News</h3>
+        <h3>MORE NEWS</h3>
         <div className="top-stories__title__line"></div>
       </div>
       <div className="post-list__container">
@@ -68,7 +88,13 @@ const PostList: React.FC = () => {
             </>
           )}
         </div>
-        <div className="post-list__container__right"></div>
+        <div className="post-list__container__right">
+          <div className="filter-container">
+            <div>
+              <Filter label="Search" type="filter" props={filterProps} />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
