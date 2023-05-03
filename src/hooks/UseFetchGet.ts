@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios, { AxiosError } from 'axios';
+import { QueryParams } from '../constant/QueryParam';
 
 export type FetchData<T> = {
   out: T;
@@ -10,7 +11,7 @@ export type FetchData<T> = {
 const useFetchGet = <T>(
   url: string,
   token?: string,
-  propsChange?: boolean,
+  params?: QueryParams
 ): FetchData<T> => {
   const [out, setOut] = useState<T>({} as T);
   const [loading, setLoading] = useState(false);
@@ -18,10 +19,11 @@ const useFetchGet = <T>(
 
   useEffect(() => {
     setLoading(true);
+    console.log(params)
     const fetchData = async () => {
       try {
         const headers = token ? { Authorization: `Bearer ${token}` } : {};
-        const config = { headers };
+        const config = { headers, params };
         const response = await axios.get(url, config);
         setOut(response?.data);
         setError(null);
@@ -35,7 +37,7 @@ const useFetchGet = <T>(
     fetchData();
     
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [url, propsChange]);
+  }, [url, params?.category, params?.date, params?.type, params?.title]);
 
   return { out, loading, error };
 };

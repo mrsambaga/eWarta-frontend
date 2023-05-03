@@ -64,9 +64,7 @@ const Login: React.FC = () => {
       dispatch(authActions.login({ token, expiredHour }));
       navigate(`/`);
     }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [out, error]);
+  }, [out, error, dispatch, navigate]);
 
   const loginForms: FormProps[] = [
     {

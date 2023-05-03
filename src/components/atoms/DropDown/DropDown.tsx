@@ -24,7 +24,6 @@ const Dropdown: React.FC<DropdownProps> = ({
         className={dropdownOptions[0].value}
         defaultValue={dropdownOptions[0].value}
       >
-        <option disabled value="" className="option"></option>
         {dropdownOptions.map((option) => (
           <option key={option.value} value={option.value}>
             {option.content}

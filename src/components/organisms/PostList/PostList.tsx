@@ -14,11 +14,13 @@ import { RootState } from "../../../store/Index";
 import Filter from "../../molecules/Filter/Filter";
 import { FormProps } from "../../../constant/FormProps";
 import { DropdownProps } from "../../atoms/DropDown/DropDown";
+import { QueryParams } from "../../../constant/QueryParam";
 import {
   CategoryDropdown,
   SortDateDropdown,
   TypeDropdown,
 } from "../../../constant/DropDown";
+import { debounce } from "../../../utils/Debounce/Debounce";
 
 const PostList: React.FC = () => {
   const { newsHighlight } = useSelector(
@@ -27,9 +29,67 @@ const PostList: React.FC = () => {
   const dispatch = useDispatch();
   const token = GetCookie("token");
 
+  const [titleFilter, setTitleFilter] = useState("");
+
+  const handleFilterFormChange = debounce(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setTitleFilter(event.target.value);
+    }
+  );
+
+  const filterProps: FormProps = {
+    placeholder: "Search by title",
+    inputType: "text",
+    className: "filter-form",
+    onChangeProp: handleFilterFormChange,
+    value: titleFilter,
+    name: "titleFilter",
+    validate: false,
+  };
+
+  const [category, setCategory] = useState("");
+  const changeCategory = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setCategory(event.target.value);
+  };
+
+  const [type, setType] = useState("");
+  const changeType = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setType(event.target.value);
+  };
+
+  const [date, setSortDate] = useState("");
+  const changeSortDate = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSortDate(event.target.value);
+  };
+
+  const param: QueryParams = {
+    title: titleFilter,
+    category: category,
+    type: type,
+    date: date,
+  };
+
+  const categoryDropdownProps: DropdownProps = {
+    onChange: changeCategory,
+    dropdownOptions: CategoryDropdown,
+    className: "filter",
+  };
+
+  const typeDropdownProps: DropdownProps = {
+    onChange: changeType,
+    dropdownOptions: TypeDropdown,
+    className: "filter",
+  };
+
+  const dateDropdownProps: DropdownProps = {
+    onChange: changeSortDate,
+    dropdownOptions: SortDateDropdown,
+    className: "filter",
+  };
+
   const { out, loading, error } = useFetchGet<{
     data: NewsHighlightResponse[];
-  }>(`http://localhost:8000/news/highlight`, token!);
+  }>(`http://localhost:8000/news/highlight`, token, param);
 
   useEffect(() => {
     if (error) {
@@ -56,57 +116,6 @@ const PostList: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [out, error]);
 
-  const [titleFilter, setTitleFilter] = useState("");
-
-  const handleFilterFormChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setTitleFilter(event.target.value);
-  };
-
-  const filterProps: FormProps = {
-    placeholder: "Search by title",
-    inputType: "text",
-    className: "filter-form",
-    onChangeProp: handleFilterFormChange,
-    value: titleFilter,
-    name: "titleFilter",
-    validate: false,
-  };
-
-  const [, setCategory] = useState("");
-  const changeCategory = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setCategory(event.target.value);
-  };
-
-  const [, setType] = useState("");
-  const changeType = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setType(event.target.value);
-  };
-
-  const [, setSortDate] = useState("");
-  const changeSortDate = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSortDate(event.target.value);
-  };
-
-  const dropdownProps1: DropdownProps = {
-    onChange: changeCategory,
-    dropdownOptions: CategoryDropdown,
-    className: "filter",
-  };
-
-  const dropdownProps2: DropdownProps = {
-    onChange: changeType,
-    dropdownOptions: TypeDropdown,
-    className: "filter",
-  };
-
-  const dropdownProps3: DropdownProps = {
-    onChange: changeSortDate,
-    dropdownOptions: SortDateDropdown,
-    className: "filter",
-  };
-
   return (
     <div className="post-list">
       <div className="post-list__title">
@@ -130,12 +139,16 @@ const PostList: React.FC = () => {
         <div className="post-list__container__right">
           <div className="filter-container">
             <Filter label="Search" type="form" props={filterProps} />
-            <Filter label="Category" type="dropdown" props={dropdownProps1} />
-            <Filter label="Type" type="dropdown" props={dropdownProps2} />
+            <Filter
+              label="Category"
+              type="dropdown"
+              props={categoryDropdownProps}
+            />
+            <Filter label="Type" type="dropdown" props={typeDropdownProps} />
             <Filter
               label="Release Date"
               type="dropdown"
-              props={dropdownProps3}
+              props={dateDropdownProps}
             />
           </div>
         </div>

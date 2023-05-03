@@ -5,49 +5,57 @@ export type DropdownOption = {
 
 export const CategoryDropdown: DropdownOption[] = [
     {
-      value: 'business',
+        value: "",
+        content: "All Categories"
+    },
+    {
+      value: 'Business',
       content: 'Business',
     },
     {
-      value: 'technology',
+      value: 'Technology',
       content: 'Technology',
     },
     {
-      value: 'politic',
+      value: 'Politic',
       content: 'Politic',
     },
     {
-      value: 'sport',
+      value: 'Sport',
       content: 'Sport',
     },
     {
-      value: 'science',
+      value: 'Science',
       content: 'Science',
     },
     {
-      value: 'economy',
+      value: 'Economy',
       content: 'Economy',
     },
 ];
 
 export const TypeDropdown: DropdownOption[] = [
     {
-      value: 'free',
-      content: 'Free',
+        value: '',
+        content: 'All Type'
     },
     {
-      value: 'paid',
-      content: 'Paid',
+        value: 'free',
+        content: 'Free',
+    },
+    {
+        value: 'paid',
+        content: 'Paid',
     },
 ];
 
 export const SortDateDropdown: DropdownOption[] = [
     {
-      value: 'asc',
+      value: 'desc',
       content: 'Newest',
     },
     {
-      value: 'desc',
+      value: 'asc',
       content: 'Latest',
     },
 ];
