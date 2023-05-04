@@ -1,4 +1,11 @@
 .admin-login {
-    height: 500px;
-    background-color: aqua;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+    &__container {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
 }

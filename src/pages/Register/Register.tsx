@@ -14,6 +14,7 @@ import {
 import useFetchPost from "../../hooks/UseFetchPost";
 import { Navigate } from "react-router-dom";
 import { registerSchema } from "../../utils/Validation/RegisterValidation";
+import "./Register.scss";
 
 const Register: React.FC = () => {
   const { name, email, password, passwordConfirm, phone, address, referral } =
@@ -146,7 +147,7 @@ const Register: React.FC = () => {
   };
 
   return (
-    <>
+    <div className="register">
       {isAuthenticated ? (
         <Navigate to="/" replace />
       ) : (
@@ -157,11 +158,12 @@ const Register: React.FC = () => {
             detail="Already have an account ? Log in. "
             forms={registerForms}
             button={registerButton}
+            className="card"
           />
           <NotifContainer />
         </>
       )}
-    </>
+    </div>
   );
 };
 

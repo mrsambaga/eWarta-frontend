@@ -21,6 +21,12 @@
     @include font-navbar;
     text-decoration: underline;
     text-underline-offset: 7px;
+}
+.navbar-outer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 } 
 
 .navbar {

@@ -11,6 +11,7 @@ type CardProps = {
   detail: string;
   forms: FormProps[];
   button: ButtonProps;
+  className: string;
 };
 
 const Card: React.FC<CardProps> = ({
@@ -19,15 +20,16 @@ const Card: React.FC<CardProps> = ({
   detail,
   forms,
   button,
+  className,
 }) => {
   return (
-    <div className="card">
-      <h3 className="card__title">{title}</h3>
-      <div className="card__sub-title">
+    <div className={className}>
+      <h3 className={`${className}__title`}>{title}</h3>
+      <div className={`${className}__sub-title`}>
         <h3>{subTitle}</h3>
         <p>{detail}</p>
       </div>
-      <div className="card__forms">
+      <div className={`${className}__forms`}>
         {forms.map((form, index) => (
           <Form key={index} {...form} />
         ))}

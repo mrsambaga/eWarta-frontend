@@ -18,6 +18,7 @@ import { RootState } from "./store/Index";
 import Unauthenticated from "./pages/Unauthenticated/Unauthenticated";
 import NotFound from "./pages/NotFound/NotFound";
 import Detail from "./pages/Detail/Detail";
+import AdminLogin from "./pages/AdminLogin/AdminLogin";
 
 function App() {
   const PrivateRoutes = () => {
@@ -45,17 +46,18 @@ function App() {
   return (
     <BrowserRouter>
       <div className="app">
-        <Navbar />
         <Routes>
-          <Route path="/admin/login" />
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
-          <Route element={<PrivateRoutes />}>
-            <Route path="/" element={<Home />} />
-            <Route path="/news/:id" element={<Detail />} />
-            <Route path="/test" element={<TestPage />} />
+          <Route element={<Navbar />}>
+            <Route path="/admin/login" element={<AdminLogin />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Login />} />
+            <Route element={<PrivateRoutes />}>
+              <Route path="/" element={<Home />} />
+              <Route path="/news/:id" element={<Detail />} />
+              <Route path="/test" element={<TestPage />} />
+            </Route>
+            <Route element={<AdminRoutes />}></Route>
           </Route>
-          <Route element={<AdminRoutes />}></Route>
           <Route path="*" element={<NotFound />}></Route>
           <Route path="/unauthenticated" element={<Unauthenticated />}></Route>
         </Routes>

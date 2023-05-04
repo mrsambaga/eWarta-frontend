@@ -15,7 +15,9 @@
     height: 200px;
     background-color: #e9e7e8;
     border-top: 3px solid #fff104;
-    margin-top: 150px;
+    position: relative;
+    bottom: 0;
+    margin-top: auto;
 
     &__container {
         display: flex;

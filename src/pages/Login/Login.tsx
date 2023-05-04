@@ -105,6 +105,7 @@ const Login: React.FC = () => {
             detail="Don't have an account ? Register"
             forms={loginForms}
             button={loginButton}
+            className="card"
           />
           <NotifContainer />
         </>
