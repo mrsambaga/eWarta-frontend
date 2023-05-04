@@ -31,10 +31,23 @@ function App() {
     return <Outlet />;
   };
 
+  const AdminRoutes = () => {
+    const isAuthenticated: boolean = useSelector(
+      (state: RootState) => state.auth.isAuthenticated
+    );
+
+    if (!isAuthenticated) {
+      return <Navigate to={"/unauthenticated"} replace />;
+    }
+    return <Outlet />;
+  };
+
   return (
     <BrowserRouter>
-      <Routes>
-        <Route element={<Navbar />}>
+      <div className="app">
+        <Navbar />
+        <Routes>
+          <Route path="/admin/login" />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route element={<PrivateRoutes />}>
@@ -42,11 +55,12 @@ function App() {
             <Route path="/news/:id" element={<Detail />} />
             <Route path="/test" element={<TestPage />} />
           </Route>
-        </Route>
-        <Route path="*" element={<NotFound />}></Route>
-        <Route path="/unauthenticated" element={<Unauthenticated />}></Route>
-      </Routes>
-      <Footer />
+          <Route element={<AdminRoutes />}></Route>
+          <Route path="*" element={<NotFound />}></Route>
+          <Route path="/unauthenticated" element={<Unauthenticated />}></Route>
+        </Routes>
+        <Footer />
+      </div>
     </BrowserRouter>
   );
 }

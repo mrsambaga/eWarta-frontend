@@ -21,14 +21,7 @@
     @include font-navbar;
     text-decoration: underline;
     text-underline-offset: 7px;
-}
-
-.app {
-    display: flex;
-    flex-direction: column;
-    align-items: center; 
-}
-  
+} 
 
 .navbar {
     width: 100%;

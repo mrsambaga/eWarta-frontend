@@ -72,3 +72,9 @@ select {
     scroll-behavior: auto !important;
   }
 }
+
+.app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
