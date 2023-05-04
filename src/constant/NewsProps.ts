@@ -1,3 +1,16 @@
+export type News = {
+    postId: number,
+    title: string,
+    summaryDesc: string,
+    imgUrl: string,
+    author: string,
+    slug:   string,
+    categoryId: string,
+    typeId: string,
+    createdAt:  string,
+    updatedAt:  string,
+    deletedAt:  string,
+}
 
 export type NewsHighlightResponse = {
     post_id: number

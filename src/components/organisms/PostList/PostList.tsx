@@ -3,13 +3,9 @@ import "./PostList.scss";
 import NewsContainer from "../../molecules/NewsContainer/NewsContainer";
 import useFetchGet from "../../../hooks/UseFetchGet";
 import { GetCookie } from "../../../utils/Cookies/Cookies";
-import {
-  NewsHighlight,
-  NewsHighlightResponse,
-} from "../../../constant/NewsProps";
+import { News, NewsHighlight } from "../../../constant/NewsProps";
 import { notifyError } from "../../atoms/Toastify/Toastify";
 import { useDispatch, useSelector } from "react-redux";
-import { newsHighlightActions } from "../../../store/NewsHighlightSlice";
 import { RootState } from "../../../store/IndexStore";
 import Filter from "../../molecules/Filter/Filter";
 import { FormProps } from "../../../constant/FormProps";
@@ -21,11 +17,10 @@ import {
   TypeDropdown,
 } from "../../../constant/DropDown";
 import { debounce } from "../../../utils/Debounce/Debounce";
+import { newsActions } from "../../../store/NewsSlice";
 
 const PostList: React.FC = () => {
-  const { newsHighlight } = useSelector(
-    (state: RootState) => state.newsHighlight
-  );
+  const { news } = useSelector((state: RootState) => state.news);
   const dispatch = useDispatch();
   const token = GetCookie("token");
 
@@ -88,8 +83,8 @@ const PostList: React.FC = () => {
   };
 
   const { out, loading, error } = useFetchGet<{
-    data: NewsHighlightResponse[];
-  }>(`http://localhost:8000/news/highlight`, token, param);
+    data: News[];
+  }>(`http://localhost:8000/news`, token, param);
 
   useEffect(() => {
     if (error) {
@@ -100,22 +95,42 @@ const PostList: React.FC = () => {
 
     if (out != null && out.data != null) {
       console.log(out);
-      const NewsHighlight: NewsHighlight[] = out.data.map((item) => {
+      const News: News[] = out.data.map((item) => {
         return {
-          id: item.post_id,
+          postId: item.postId,
           title: item.title,
-          desc: item.summary_desc,
-          img: item.img_url,
-          alt: item.title,
+          summaryDesc: item.summaryDesc,
+          imgUrl: item.imgUrl,
           author: item.author,
+          categoryId: item.categoryId,
+          typeId: item.typeId,
+          slug: item.slug,
+          createdAt: item.createdAt,
+          updatedAt: item.updatedAt,
+          deletedAt: item.deletedAt,
         };
       });
 
-      dispatch(newsHighlightActions.setNewsHighlight(NewsHighlight));
+      dispatch(newsActions.setNews(News));
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [out, error]);
+
+  const [newsHighlight, setNewsHighlight] = useState<NewsHighlight[]>([]);
+  useEffect(() => {
+    const newsHighlightDTO: NewsHighlight[] = news.map((item) => {
+      const { postId, title, summaryDesc, imgUrl, author } = item;
+      return {
+        id: postId,
+        title: title,
+        desc: summaryDesc,
+        img: imgUrl,
+        author: author,
+      };
+    });
+    setNewsHighlight(newsHighlightDTO);
+  }, [news]);
 
   return (
     <div className="post-list">

@@ -2,16 +2,10 @@ import React from "react";
 import "./NewsContainer.scss";
 import NewsCardPrimary from "../../atoms/NewsCard/NewsCardPrimary";
 import NewsCardSecondary from "../../atoms/NewsCard/NewsCardSecondary";
+import { NewsHighlight } from "../../../constant/NewsProps";
 
 type NewsContainerProps = {
-  news: {
-    id: number;
-    img: string;
-    alt: string;
-    title: string;
-    desc: string;
-    author: string;
-  }[];
+  news: NewsHighlight[];
   className: string;
   type: string;
 };
@@ -41,7 +35,7 @@ const NewsContainer: React.FC<NewsContainerProps> = ({
           key={newsItem.id}
           id={newsItem.id}
           img={newsItem.img}
-          alt={newsItem.alt}
+          alt={newsItem.alt!}
           title={newsItem.title}
           desc={newsItem.desc}
           author={newsItem.author}

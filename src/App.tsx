@@ -18,8 +18,9 @@ import { RootState } from "./store/IndexStore";
 import Unauthenticated from "./pages/Unauthenticated/Unauthenticated";
 import NotFound from "./pages/NotFound/NotFound";
 import Detail from "./pages/Detail/Detail";
-import AdminLogin from "./pages/AdminLogin/AdminLogin";
-import AdminHome from "./pages/AdminHome/AdminHome";
+import AdminLogin from "./pages/Admin/AdminLogin/AdminLogin";
+import AdminHome from "./pages/Admin/AdminHome/AdminHome";
+import AdminPost from "./pages/Admin/AdminPost/AdminPost";
 
 function App() {
   const PrivateRoutes = () => {
@@ -59,6 +60,7 @@ function App() {
             </Route>
             <Route element={<AdminRoutes />}>
               <Route path="/admin/home" element={<AdminHome />} />
+              <Route path="/admin/posts" element={<AdminPost />} />
             </Route>
           </Route>
           <Route path="*" element={<NotFound />}></Route>

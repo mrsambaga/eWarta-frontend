@@ -5,7 +5,7 @@ import useFetchGet from "../../hooks/UseFetchGet";
 import { GetCookie } from "../../utils/Cookies/Cookies";
 import { notifyError } from "../../components/atoms/Toastify/Toastify";
 import { useDispatch, useSelector } from "react-redux";
-import { newsDetailActions } from "../../store/NewsDetail";
+import { newsDetailActions } from "../../store/NewsDetailSlice";
 import { RootState } from "../../store/IndexStore";
 import { useParams } from "react-router-dom";
 
@@ -20,7 +20,7 @@ const Detail: React.FC = () => {
 
   const { out, loading, error } = useFetchGet<{
     data: NewsDetailResponse;
-  }>(`http://localhost:8000/news/detail/${id}`, token);
+  }>(`http://localhost:8000/news/${id}`, token);
 
   useEffect(() => {
     if (error) {

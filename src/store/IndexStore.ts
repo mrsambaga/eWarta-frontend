@@ -2,15 +2,15 @@ import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import authSlice from "./AuthSlice";
 import loginFormSlice from "./LoginFormSlice";
 import registerFormSlice from "./RegisterFormSlice";
-import newsHighlightSlice from "./NewsHighlightSlice";
-import newsDetailSlice from "./NewsDetail";
+import newsDetailSlice from "./NewsDetailSlice";
 import adminAuthSlice from "./AdminAuthSlice";
+import newsSlice from "./NewsSlice";
 
 const rootReducer = combineReducers({
     auth: authSlice.reducer,
     loginForm: loginFormSlice.reducer,
     registerForm: registerFormSlice.reducer,
-    newsHighlight: newsHighlightSlice.reducer,
+    news: newsSlice.reducer,
     newsDetail: newsDetailSlice.reducer,
     authAdmin: adminAuthSlice.reducer
 })
