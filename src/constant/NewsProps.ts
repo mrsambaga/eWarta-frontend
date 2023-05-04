@@ -15,3 +15,19 @@ export type NewsHighlight = {
     alt? : string
     author: string
 }
+
+export type NewsDetailResponse = {
+    title: string
+    summary_desc: string
+    img_url: string
+    author: string
+    content: string
+}
+
+export type NewsDetail = {
+    title: string
+    summaryDesc: string
+    imgUrl: string
+    author: string
+    content: string
+}
