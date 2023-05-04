@@ -10,7 +10,7 @@ import {
 import { notifyError } from "../../atoms/Toastify/Toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { newsHighlightActions } from "../../../store/NewsHighlightSlice";
-import { RootState } from "../../../store/Index";
+import { RootState } from "../../../store/IndexStore";
 import Filter from "../../molecules/Filter/Filter";
 import { FormProps } from "../../../constant/FormProps";
 import { DropdownProps } from "../../atoms/DropDown/DropDown";

@@ -12,6 +12,7 @@ export type FormProps = {
   export type LoginForm = {
     email: string;
     password: string;
+    role: string;
   };
 
   export type RegisterForm = {

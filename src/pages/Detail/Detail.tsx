@@ -6,7 +6,7 @@ import { GetCookie } from "../../utils/Cookies/Cookies";
 import { notifyError } from "../../components/atoms/Toastify/Toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { newsDetailActions } from "../../store/NewsDetail";
-import { RootState } from "../../store/Index";
+import { RootState } from "../../store/IndexStore";
 import { useParams } from "react-router-dom";
 
 const Detail: React.FC = () => {

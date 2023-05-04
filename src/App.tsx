@@ -14,11 +14,12 @@ import Home from "./pages/Home/Home";
 import Footer from "./components/organisms/Footer/Footer";
 import { useSelector } from "react-redux";
 import TestPage from "./pages/TestPage/TestPage";
-import { RootState } from "./store/Index";
+import { RootState } from "./store/IndexStore";
 import Unauthenticated from "./pages/Unauthenticated/Unauthenticated";
 import NotFound from "./pages/NotFound/NotFound";
 import Detail from "./pages/Detail/Detail";
 import AdminLogin from "./pages/AdminLogin/AdminLogin";
+import AdminHome from "./pages/AdminHome/AdminHome";
 
 function App() {
   const PrivateRoutes = () => {
@@ -33,11 +34,11 @@ function App() {
   };
 
   const AdminRoutes = () => {
-    const isAuthenticated: boolean = useSelector(
-      (state: RootState) => state.auth.isAuthenticated
+    const isAdminAuthenticated: boolean = useSelector(
+      (state: RootState) => state.authAdmin.isAdminAuthenticated
     );
 
-    if (!isAuthenticated) {
+    if (!isAdminAuthenticated) {
       return <Navigate to={"/unauthenticated"} replace />;
     }
     return <Outlet />;
@@ -56,7 +57,9 @@ function App() {
               <Route path="/news/:id" element={<Detail />} />
               <Route path="/test" element={<TestPage />} />
             </Route>
-            <Route element={<AdminRoutes />}></Route>
+            <Route element={<AdminRoutes />}>
+              <Route path="/admin/home" element={<AdminHome />} />
+            </Route>
           </Route>
           <Route path="*" element={<NotFound />}></Route>
           <Route path="/unauthenticated" element={<Unauthenticated />}></Route>

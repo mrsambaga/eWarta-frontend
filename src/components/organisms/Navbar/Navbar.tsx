@@ -11,10 +11,15 @@ import Button from "../../atoms/Button/Button";
 import TitleBox from "../../atoms/TitleBox/TitleBox";
 import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../../../store/AuthSlice";
-import { RootState } from "../../../store/Index";
+import { RootState } from "../../../store/IndexStore";
+import { adminAuthActions } from "../../../store/AdminAuthSlice";
 
 const Navbar: React.FC = () => {
   const { isAuthenticated } = useSelector((state: RootState) => state.auth);
+  const { isAdminAuthenticated } = useSelector(
+    (state: RootState) => state.authAdmin
+  );
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
@@ -24,8 +29,13 @@ const Navbar: React.FC = () => {
   };
 
   const logOutHandler = () => {
-    dispatch(authActions.logout());
-    navigate("/login");
+    if (isAuthenticated) {
+      dispatch(authActions.logout());
+      navigate("/login");
+    } else if (isAdminAuthenticated) {
+      dispatch(adminAuthActions.logout());
+      navigate("/admin/login");
+    }
   };
 
   return (
@@ -56,11 +66,40 @@ const Navbar: React.FC = () => {
                   </li>
                 </>
               )}
+              {isAdminAuthenticated && (
+                <>
+                  <li className="navbar__list__item">
+                    <NavLink to="/admin/posts" className={"nav-link"}>
+                      Posts
+                    </NavLink>
+                  </li>
+                  <li className="navbar__list__item">
+                    <NavLink to="/admin/transaction" className={"nav-link"}>
+                      Transaction Invoice
+                    </NavLink>
+                  </li>
+                  <li className="navbar__list__item">
+                    <NavLink to="/admin/voucher" className={"nav-link"}>
+                      Voucher
+                    </NavLink>
+                  </li>
+                  <li className="navbar__list__item">
+                    <NavLink to="/admin/reward" className={"nav-link"}>
+                      User Reward
+                    </NavLink>
+                  </li>
+                  <li className="navbar__list__item">
+                    <NavLink to="/admin/gift" className={"nav-link"}>
+                      Gift
+                    </NavLink>
+                  </li>
+                </>
+              )}
             </ul>
             <div className="navbar__button">
-              {location.pathname.includes("/admin") ? (
+              {location.pathname.includes("/admin") && !isAdminAuthenticated ? (
                 <></>
-              ) : isAuthenticated ? (
+              ) : isAuthenticated || isAdminAuthenticated ? (
                 <>
                   <Button
                     label="Logout"

@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { FormProps, RegisterForm } from "../../constant/FormProps";
 import { ButtonProps } from "../../constant/ButtonProps";
 import Card from "../../components/organisms/Card/Card";
-import { RootState } from "../../store/Index";
+import { RootState } from "../../store/IndexStore";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { registerFormActions } from "../../store/RegisterFormSlice";

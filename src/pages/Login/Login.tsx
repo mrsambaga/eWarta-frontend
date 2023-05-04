@@ -11,7 +11,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { authActions } from "../../store/AuthSlice";
 import { loginFormActions } from "../../store/LoginFormSlice";
-import { RootState } from "../../store/Index";
+import { RootState } from "../../store/IndexStore";
 import { LoginForm } from "../../constant/FormProps";
 import { loginSchema } from "../../utils/Validation/LoginValidation";
 
@@ -43,9 +43,11 @@ const Login: React.FC = () => {
     dispatch(loginFormActions.updateLoginForm({ name, value }));
   };
 
+  const defaultRole: string = "user";
   const body: LoginForm = {
     email: email,
     password: password,
+    role: defaultRole,
   };
 
   const { out, error } = useFetchPost(

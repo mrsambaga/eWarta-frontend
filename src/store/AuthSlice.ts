@@ -8,6 +8,7 @@ const authSlice = createSlice({
         login(state, actions) {
             const { token, expiredHour } = actions.payload
             SetCookie("token", token, expiredHour)
+            SetCookie('admin-token', '', 0);
             state.isAuthenticated = true;
         },
         logout(state) {

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./AdminLogin.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../store/Index";
+import { RootState } from "../../store/IndexStore";
 import { Navigate, useNavigate } from "react-router-dom";
 import { loginSchema } from "../../utils/Validation/LoginValidation";
 import {
@@ -11,15 +11,18 @@ import {
 import { loginFormActions } from "../../store/LoginFormSlice";
 import { FormProps, LoginForm } from "../../constant/FormProps";
 import useFetchPost from "../../hooks/UseFetchPost";
-import { authActions } from "../../store/AuthSlice";
 import { ButtonProps } from "../../constant/ButtonProps";
 import Card from "../../components/organisms/Card/Card";
+import { adminAuthActions } from "../../store/AdminAuthSlice";
 
 const AdminLogin: React.FC = () => {
   const { email, password } = useSelector(
     (state: RootState) => state.loginForm
   );
   const { isAuthenticated } = useSelector((state: RootState) => state.auth);
+  const { isAdminAuthenticated } = useSelector(
+    (state: RootState) => state.authAdmin
+  );
 
   const [submit, setSubmit] = useState(false);
   const navigate = useNavigate();
@@ -46,6 +49,7 @@ const AdminLogin: React.FC = () => {
   const body: LoginForm = {
     email: email,
     password: password,
+    role: "admin",
   };
 
   const { out, error } = useFetchPost(
@@ -61,8 +65,8 @@ const AdminLogin: React.FC = () => {
     } else if (out != null) {
       const token = out.data.token;
       const expiredHour = 1;
-      dispatch(authActions.login({ token, expiredHour }));
-      navigate(`/`);
+      dispatch(adminAuthActions.login({ token, expiredHour }));
+      navigate(`/admin/home`);
     }
   }, [out, error, dispatch, navigate]);
 
@@ -96,8 +100,8 @@ const AdminLogin: React.FC = () => {
   return (
     <div className="admin-login">
       <div className="admin-login__container">
-        {isAuthenticated ? (
-          <Navigate to="/" replace />
+        {isAuthenticated || isAdminAuthenticated ? (
+          <Navigate to="/admin/home" replace />
         ) : (
           <>
             <Card
