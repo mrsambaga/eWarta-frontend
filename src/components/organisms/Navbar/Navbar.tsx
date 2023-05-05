@@ -43,7 +43,16 @@ const Navbar: React.FC = () => {
       <div className="navbar">
         <div className="navbar__container">
           <nav className="navbar__container__nav">
-            <Link to={"/"} className="title-link">
+            <Link
+              to={
+                isAuthenticated
+                  ? "/"
+                  : isAdminAuthenticated
+                  ? "/admin/home"
+                  : "/login"
+              }
+              className="title-link"
+            >
               <TitleBox label="eWarta" className="title"></TitleBox>
             </Link>
             <ul className="navbar__list">

@@ -20,7 +20,9 @@ const Login: React.FC = () => {
     (state: RootState) => state.loginForm
   );
   const { isAuthenticated } = useSelector((state: RootState) => state.auth);
-
+  const { isAdminAuthenticated } = useSelector(
+    (state: RootState) => state.authAdmin
+  );
   const [submit, setSubmit] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -99,6 +101,8 @@ const Login: React.FC = () => {
     <>
       {isAuthenticated ? (
         <Navigate to="/" replace />
+      ) : isAdminAuthenticated ? (
+        <Navigate to="/admin/home" replace />
       ) : (
         <>
           <Card

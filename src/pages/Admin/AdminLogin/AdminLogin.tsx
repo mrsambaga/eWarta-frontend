@@ -100,7 +100,9 @@ const AdminLogin: React.FC = () => {
   return (
     <div className="admin-login">
       <div className="admin-login__container">
-        {isAuthenticated || isAdminAuthenticated ? (
+        {isAuthenticated ? (
+          <Navigate to="/" replace />
+        ) : isAdminAuthenticated ? (
           <Navigate to="/admin/home" replace />
         ) : (
           <>

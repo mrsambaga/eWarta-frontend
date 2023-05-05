@@ -7,6 +7,9 @@ import Button from "../../../components/atoms/Button/Button";
 import { useNavigate } from "react-router-dom";
 import { useQuill } from "react-quilljs";
 import "quill/dist/quill.snow.css";
+import Filter from "../../../components/molecules/Filter/Filter";
+import { DropdownProps } from "../../../components/atoms/DropDown/DropDown";
+import { CategoryDropdown, TypeDropdown } from "../../../constant/DropDown";
 
 const AdminCreatePost: React.FC = () => {
   const navigate = useNavigate();
@@ -27,9 +30,11 @@ const AdminCreatePost: React.FC = () => {
     author: "",
     slug: "",
     content: "",
+    category: "",
+    type: "",
   });
   const handleNewPostChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
+    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
     key: string
   ) => {
     const newPostProps = {
@@ -107,6 +112,20 @@ const AdminCreatePost: React.FC = () => {
     }
   }, [quill, quillRef, newPost]);
 
+  const categoryDropdownProps: DropdownProps = {
+    onChange: (event: React.ChangeEvent<HTMLSelectElement>) =>
+      handleNewPostChange(event, "category"),
+    dropdownOptions: CategoryDropdown.slice(1),
+    className: "new-post-dropdown",
+  };
+
+  const typeDropdownProps: DropdownProps = {
+    onChange: (event: React.ChangeEvent<HTMLSelectElement>) =>
+      handleNewPostChange(event, "type"),
+    dropdownOptions: TypeDropdown.slice(1),
+    className: "new-post-dropdown",
+  };
+
   const backClickHandler = () => {
     navigate("/admin/posts");
   };
@@ -135,6 +154,12 @@ const AdminCreatePost: React.FC = () => {
             />
           </div>
         ))}
+        <Filter
+          label="Category"
+          type="dropdown"
+          props={categoryDropdownProps}
+        />
+        <Filter label="Type" type="dropdown" props={typeDropdownProps} />
         <div className="create-post__forms__quill">
           <h3>Content</h3>
           <div ref={quillRef} />

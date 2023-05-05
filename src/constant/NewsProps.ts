@@ -53,4 +53,6 @@ export type CreateNewPost = {
     author: string
     slug: string
     content: string
+    category: string
+    type: string
 }
