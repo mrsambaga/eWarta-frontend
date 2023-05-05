@@ -10,19 +10,13 @@ import "quill/dist/quill.snow.css";
 import Filter from "../../../components/molecules/Filter/Filter";
 import { DropdownProps } from "../../../components/atoms/DropDown/DropDown";
 import { CategoryDropdown, TypeDropdown } from "../../../constant/DropDown";
+import axios from "axios";
+import ImageInput from "../../../components/molecules/ImageInput/ImageInput";
 
 const AdminCreatePost: React.FC = () => {
+  /* ----------- Forms --------------  */
+
   const navigate = useNavigate();
-  const modules = {
-    toolbar: [
-      [{ header: [1, 2, 3, 4, 5, 6, false] }],
-      ["bold", "italic", "underline", "strike"],
-      [{ list: "ordered" }, { list: "bullet" }],
-      [{ indent: "-1" }, { indent: "+1" }],
-      ["clean"],
-    ],
-  };
-  const { quill, quillRef } = useQuill({ modules });
   const [newPost, setNewPost] = useState<CreateNewPost>({
     title: "",
     summaryDesc: "",
@@ -98,19 +92,7 @@ const AdminCreatePost: React.FC = () => {
     },
   ];
 
-  useEffect(() => {
-    if (quill) {
-      quill.on("text-change", () => {
-        const key: string = "content";
-        const newPostContent: CreateNewPost = {
-          ...newPost,
-          [key]: quillRef.current.firstChild.innerHTML,
-        };
-        setNewPost(newPostContent);
-        console.log(newPost);
-      });
-    }
-  }, [quill, quillRef, newPost]);
+  /* ----------- Dropdown Props --------------  */
 
   const categoryDropdownProps: DropdownProps = {
     onChange: (event: React.ChangeEvent<HTMLSelectElement>) =>
@@ -126,12 +108,71 @@ const AdminCreatePost: React.FC = () => {
     className: "new-post-dropdown",
   };
 
+  /* ----------- Quill Text Editor --------------  */
+
+  const modules = {
+    toolbar: [
+      [{ header: [1, 2, 3, 4, 5, 6, false] }],
+      ["bold", "italic", "underline", "strike"],
+      [{ list: "ordered" }, { list: "bullet" }],
+      [{ indent: "-1" }, { indent: "+1" }],
+      ["clean"],
+    ],
+  };
+  const { quill, quillRef } = useQuill({ modules });
+
+  useEffect(() => {
+    if (quill) {
+      quill.on("text-change", () => {
+        const key: string = "content";
+        const newPostContent: CreateNewPost = {
+          ...newPost,
+          [key]: quillRef.current.firstChild.innerHTML,
+        };
+        setNewPost(newPostContent);
+        console.log(newPost);
+      });
+    }
+  }, [quill, quillRef, newPost]);
+
+  /* ----------- Button Handler --------------  */
+
   const backClickHandler = () => {
     navigate("/admin/posts");
   };
 
   const submitClickHandler = () => {
-    return;
+    uploadImage();
+  };
+
+  /* ----------- Fetch Api Create New Post --------------  */
+
+  /* ----------- Upload Image --------------  */
+
+  const [img, setImg] = useState<File>();
+  const [imgUrl, setImgUrl] = useState("");
+
+  const inputChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files) {
+      setImg(event.target.files[0]);
+      setImgUrl(URL.createObjectURL(event.target.files[0]));
+      console.log(img);
+    }
+  };
+
+  const uploadImage = () => {
+    const formData = new FormData();
+    formData.append("file", img!);
+    formData.append("upload_preset", "zndy4eop");
+
+    axios
+      .post("https://api.cloudinary.com/v1_1/dixze5mfe/image/upload", formData)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
@@ -160,6 +201,14 @@ const AdminCreatePost: React.FC = () => {
           props={categoryDropdownProps}
         />
         <Filter label="Type" type="dropdown" props={typeDropdownProps} />
+        <div className="create-post__forms__image">
+          <h3>Image</h3>
+          <ImageInput
+            type="file"
+            onChange={inputChangeHandler}
+            imageUrl={imgUrl}
+          />
+        </div>
         <div className="create-post__forms__quill">
           <h3>Content</h3>
           <div ref={quillRef} />
