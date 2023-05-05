@@ -10,7 +10,7 @@ const Form: React.FC<FormProps> = ({
   isReadOnly = false,
   className,
   name,
-  validate
+  validate,
 }) => {
   const [activity, setActivity] = useState(value);
   const [showError, setShowError] = useState(false);

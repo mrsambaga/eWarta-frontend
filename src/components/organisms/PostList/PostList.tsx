@@ -105,6 +105,7 @@ const PostList: React.FC = () => {
           categoryId: item.categoryId,
           typeId: item.typeId,
           slug: item.slug,
+          content: item.content,
           createdAt: item.createdAt,
           updatedAt: item.updatedAt,
           deletedAt: item.deletedAt,

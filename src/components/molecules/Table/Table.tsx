@@ -1,98 +1,126 @@
-// import React, { useEffect, useState } from "react";
-// import { GetCookie } from "../../../utils/Cookies/Cookies";
-// import useFetchGet from "../../../hooks/UseFetchGet";
+import React, { useEffect, useState } from "react";
+import { GetCookie } from "../../../utils/Cookies/Cookies";
+import useFetchGet from "../../../hooks/UseFetchGet";
+import { News } from "../../../constant/NewsProps";
+import { notifyError } from "../../atoms/Toastify/Toastify";
+import { useDispatch, useSelector } from "react-redux";
+import { newsActions } from "../../../store/NewsSlice";
+import { RootState } from "../../../store/IndexStore";
+import "./Table.scss";
+import moment from "moment";
+import Button from "../../atoms/Button/Button";
+import useFetchPost from "../../../hooks/UseFetchPost";
 
-// const Table: React.FC = () => {
-//   const token = GetCookie("admin-token");
-//   const [queryParams, setQueryParams] = useState("");
-//   const [paramChange, setParamChange] = useState(false);
-//   const { out, loading, error } = useFetchGet<{ data: TransferResponse[] }>(
-//     `http://localhost:8000/transaction?${queryParams}`,
-//     token!,
-//     paramChange
-//   );
+const Table: React.FC = () => {
+  const token = GetCookie("admin-token");
+  const dispatch = useDispatch();
+  const [refresh, setRefresh] = useState<boolean>(false);
+  const { out, error } = useFetchGet<{
+    data: News[];
+  }>(`http://localhost:8000/news`, token, undefined, refresh);
 
-//   useEffect(() => {
-//     const queryParams = queryString.stringify({
-//       search: QueryParams?.search,
-//       sortBy: QueryParams?.sortBy,
-//       sort: QueryParams?.sort,
-//     });
-//     setQueryParams(queryParams);
-//     setParamChange(!paramChange);
-//   }, [QueryParams]);
+  const { news } = useSelector((state: RootState) => state.news);
 
-//   useEffect(() => {
-//     if (error) {
-//       const errorMessage = error.response?.data || error.message;
-//       notifyError(JSON.stringify(errorMessage));
-//       return;
-//     }
+  useEffect(() => {
+    if (error) {
+      const errorMessage = error.response?.data || error.message;
+      notifyError(JSON.stringify(errorMessage));
+      return;
+    }
 
-//     if (out != null && out.data != null) {
-//       console.log(out);
-//       const transactionDetail: TransactionDetail[] = out.data.map((item) => {
-//         const selfWallet: string | null = localStorage.getItem("wallet_number");
-//         const dateTime = moment(item.CreatedAt).format("HH:mm - DD MMMM YYYY");
-//         return {
-//           TransactionId: item.TransactionId,
-//           Amount: item.Amount,
-//           Description: item.Description ? item.Description : "",
-//           FromTo: item.SourceId ? item.SourceId : item.TargetWalletNumber,
-//           Type:
-//             item.SourceId || item.TargetWalletNumber == selfWallet
-//               ? "Credit"
-//               : "Debit",
-//           DateTime: dateTime,
-//         };
-//       });
+    if (out != null && out.data != null) {
+      console.log(out);
+      const News: News[] = out.data.map((item) => {
+        const dateTime = moment(item.createdAt).format("HH:mm - DD MMMM YYYY");
 
-//       setTransactions(transactionDetail);
-//     }
-//   }, [out, error]);
+        return {
+          postId: item.postId,
+          title: item.title,
+          summaryDesc: item.summaryDesc,
+          imgUrl: item.imgUrl,
+          author: item.author,
+          categoryId: item.categoryId,
+          typeId: item.typeId,
+          slug: item.slug,
+          content: item.content,
+          createdAt: dateTime,
+          updatedAt: item.updatedAt,
+          deletedAt: item.deletedAt,
+        };
+      });
 
-//   return (
-//     <div>
-//       {loading ? (
-//         <>
-//           <div>
-//             <h1>Loading Transaction History.....</h1>
-//           </div>
-//         </>
-//       ) : (
-//         <table className="table table-bordered table-striped">
-//           <thead className="table__head">
-//             <tr>
-//               <th>Date & Time</th>
-//               <th>Type</th>
-//               <th>From/To</th>
-//               <th>Description</th>
-//               <th>Amount</th>
-//             </tr>
-//           </thead>
-//           <tbody className="table__body">
-//             {transactions.map((transaction) => (
-//               <tr key={transaction.TransactionId}>
-//                 <td>{transaction.DateTime}</td>
-//                 <td>{transaction.Type}</td>
-//                 <td>{transaction.FromTo}</td>
-//                 <td>{transaction.Description}</td>
-//                 <td>{transaction.Amount}</td>
-//               </tr>
-//             ))}
-//           </tbody>
-//         </table>
-//       )}
-//     </div>
-//   );
-// };
+      dispatch(newsActions.setNews(News));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [out, error]);
 
-// export default Table;
+  const editClickHandler = () => {
+    return;
+  };
 
-import React from "react";
+  const adminToken = GetCookie("admin-token");
+  const [submit, setSubmit] = useState<boolean>(false);
+  const [postId, setPostId] = useState<number | null>(null);
+  const { out: deleteOut, error: deleteError } = useFetchPost(
+    "http://localhost:8000/news/delete",
+    { postId: postId },
+    submit,
+    () => setSubmit(false),
+    adminToken
+  );
 
-function Table() {
-  return <div>Table</div>;
-}
+  useEffect(() => {
+    if (deleteError != null) {
+      notifyError(deleteError.response?.data?.message || deleteError.message);
+    } else if (deleteOut != null) {
+      setRefresh(!refresh);
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [deleteError, deleteOut]);
+
+  const deleteClickhandler = (id: number) => {
+    setPostId(id);
+    setSubmit(true);
+  };
+
+  return (
+    <div className="table-container">
+      <table className="table table-bordered table-striped">
+        <thead className="table__head">
+          <tr>
+            <th>Id</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Created At</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody className="table__body">
+          {news.map((item) => (
+            <tr key={item.postId}>
+              <td>{item.postId}</td>
+              <td className="table__body__title">{item.title}</td>
+              <td>{item.author}</td>
+              <td>{item.createdAt}</td>
+              <td className="table__body__button">
+                <Button
+                  label="Edit"
+                  onClickHandler={editClickHandler}
+                  className="table-button"
+                />
+                <Button
+                  label="Delete"
+                  onClickHandler={() => deleteClickhandler(item.postId)}
+                  className="table-button"
+                />
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+};
 
 export default Table;

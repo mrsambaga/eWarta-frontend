@@ -21,6 +21,7 @@ import Detail from "./pages/Detail/Detail";
 import AdminLogin from "./pages/Admin/AdminLogin/AdminLogin";
 import AdminHome from "./pages/Admin/AdminHome/AdminHome";
 import AdminPost from "./pages/Admin/AdminPost/AdminPost";
+import AdminCreatePost from "./pages/Admin/AdminCreatePost/AdminCreatePost";
 
 function App() {
   const PrivateRoutes = () => {
@@ -61,6 +62,7 @@ function App() {
             <Route element={<AdminRoutes />}>
               <Route path="/admin/home" element={<AdminHome />} />
               <Route path="/admin/posts" element={<AdminPost />} />
+              <Route path="/admin/posts/create" element={<AdminCreatePost />} />
             </Route>
           </Route>
           <Route path="*" element={<NotFound />}></Route>

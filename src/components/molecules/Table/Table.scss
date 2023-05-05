@@ -1,0 +1,55 @@
+@mixin font-title {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 700;
+    line-height: 50px;
+    letter-spacing: 0.1px;
+    color: #454745;
+}
+
+@mixin font-sub-title {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 600;
+    line-height: 32px;
+    letter-spacing: 0.1px;
+    color: #454745;
+}
+
+@mixin font {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 500;
+    line-height: 26px;
+    letter-spacing: 0.1px;
+    color: #454745;
+}
+
+.table-container {
+    width: 100%;
+    max-width: 1000px;
+}
+
+.table {
+    width: 100%;
+    max-width: 1000px;
+
+    &__head {
+        @include font-title;
+        font-size: 16px;
+    }
+
+    &__body {
+        @include font-sub-title;
+        font-size: 14px;
+
+        &__title {
+            color: #4f7177 !important;
+        }
+
+        &__button {
+            display: flex;
+            gap: 1rem;
+        }
+    }
+}

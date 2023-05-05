@@ -5,6 +5,7 @@ export type News = {
     imgUrl: string,
     author: string,
     slug:   string,
+    content: string,
     categoryId: string,
     typeId: string,
     createdAt:  string,
@@ -42,5 +43,14 @@ export type NewsDetail = {
     summaryDesc: string
     imgUrl: string
     author: string
+    content: string
+}
+
+export type CreateNewPost = {
+    title: string
+    summaryDesc: string
+    imgUrl: string
+    author: string
+    slug: string
     content: string
 }

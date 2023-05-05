@@ -11,7 +11,8 @@ export type FetchData<T> = {
 const useFetchGet = <T>(
   url: string,
   token?: string,
-  params?: QueryParams
+  params?: QueryParams,
+  refresh?: boolean
 ): FetchData<T> => {
   const [out, setOut] = useState<T>({} as T);
   const [loading, setLoading] = useState(false);
@@ -37,7 +38,7 @@ const useFetchGet = <T>(
     fetchData();
     
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [url, params?.category, params?.date, params?.type, params?.title]);
+  }, [url, params?.category, params?.date, params?.type, params?.title, refresh]);
 
   return { out, loading, error };
 };
