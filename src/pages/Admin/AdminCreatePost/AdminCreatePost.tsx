@@ -9,28 +9,50 @@ import { useQuill } from "react-quilljs";
 import "quill/dist/quill.snow.css";
 import Filter from "../../../components/molecules/Filter/Filter";
 import { DropdownProps } from "../../../components/atoms/DropDown/DropDown";
-import { CategoryDropdown, TypeDropdown } from "../../../constant/DropDown";
-import axios from "axios";
+import { CategoryDropdown, PostTypeDropdown } from "../../../constant/DropDown";
 import ImageInput from "../../../components/molecules/ImageInput/ImageInput";
+import useFetchPost from "../../../hooks/UseFetchPost";
+import {
+  NotifContainer,
+  notifyError,
+  notifySuccess,
+} from "../../../components/atoms/Toastify/Toastify";
+import { GetCookie } from "../../../utils/Cookies/Cookies";
 
 const AdminCreatePost: React.FC = () => {
+  const token = GetCookie("admin-token");
+
   /* ----------- Forms --------------  */
 
   const navigate = useNavigate();
+  const [imgUrl, setImgUrl] = useState<string>("");
   const [newPost, setNewPost] = useState<CreateNewPost>({
     title: "",
     summaryDesc: "",
-    imgUrl: "",
+    image: null,
     author: "",
     slug: "",
     content: "",
     category: "",
     type: "",
   });
+
   const handleNewPostChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
     key: string
   ) => {
+    if (event.target instanceof HTMLInputElement && event.target.files) {
+      const newPostProps = {
+        ...newPost,
+        [key]: event.target.files[0],
+      };
+      setNewPost(newPostProps);
+      const url = URL.createObjectURL(event.target.files[0]);
+      setImgUrl(url);
+      console.log(newPost);
+      return;
+    }
+
     const newPostProps = {
       ...newPost,
       [key]: event.target.value,
@@ -58,16 +80,6 @@ const AdminCreatePost: React.FC = () => {
       onChangeProp: (event: React.ChangeEvent<HTMLInputElement>) =>
         handleNewPostChange(event, "summaryDesc"),
       value: newPost.summaryDesc,
-      validate: true,
-    },
-    {
-      placeholder: "Image",
-      inputType: "text",
-      className: "auth-form",
-      name: "image",
-      onChangeProp: (event: React.ChangeEvent<HTMLInputElement>) =>
-        handleNewPostChange(event, "imgUrl"),
-      value: newPost.imgUrl,
       validate: true,
     },
     {
@@ -101,10 +113,10 @@ const AdminCreatePost: React.FC = () => {
     className: "new-post-dropdown",
   };
 
-  const typeDropdownProps: DropdownProps = {
+  const postTypeDropdownProps: DropdownProps = {
     onChange: (event: React.ChangeEvent<HTMLSelectElement>) =>
       handleNewPostChange(event, "type"),
-    dropdownOptions: TypeDropdown.slice(1),
+    dropdownOptions: PostTypeDropdown.slice(1),
     className: "new-post-dropdown",
   };
 
@@ -142,38 +154,40 @@ const AdminCreatePost: React.FC = () => {
   };
 
   const submitClickHandler = () => {
-    uploadImage();
+    setSubmit(true);
   };
 
   /* ----------- Fetch Api Create New Post --------------  */
+  const [submit, setSubmit] = useState<boolean>(false);
 
-  /* ----------- Upload Image --------------  */
+  const body = new FormData();
+  body.append("title", newPost.title);
+  body.append("summaryDesc", newPost.summaryDesc);
+  body.append("image", newPost.image!);
+  body.append("author", newPost.author);
+  body.append("slug", newPost.slug);
+  body.append("content", newPost.content);
+  body.append("category", newPost.category);
+  body.append("type", newPost.type);
 
-  const [img, setImg] = useState<File>();
-  const [imgUrl, setImgUrl] = useState("");
+  const { out, error } = useFetchPost(
+    "http://localhost:8000/news",
+    body,
+    submit,
+    () => setSubmit(false),
+    token,
+    "multipart/form-data"
+  );
 
-  const inputChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files) {
-      setImg(event.target.files[0]);
-      setImgUrl(URL.createObjectURL(event.target.files[0]));
-      console.log(img);
+  useEffect(() => {
+    console.log("OUT :", out);
+    console.log("ERROR :", error);
+    if (error != null) {
+      notifyError(error.response?.data?.message || error.message);
+    } else if (out != null) {
+      notifySuccess(out.message);
     }
-  };
-
-  const uploadImage = () => {
-    const formData = new FormData();
-    formData.append("file", img!);
-    formData.append("upload_preset", "zndy4eop");
-
-    axios
-      .post("https://api.cloudinary.com/v1_1/dixze5mfe/image/upload", formData)
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+  }, [out, error]);
 
   return (
     <div className="create-post">
@@ -200,13 +214,15 @@ const AdminCreatePost: React.FC = () => {
           type="dropdown"
           props={categoryDropdownProps}
         />
-        <Filter label="Type" type="dropdown" props={typeDropdownProps} />
+        <Filter label="Type" type="dropdown" props={postTypeDropdownProps} />
         <div className="create-post__forms__image">
           <h3>Image</h3>
           <ImageInput
             type="file"
-            onChange={inputChangeHandler}
-            imageUrl={imgUrl}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              handleNewPostChange(e, "image")
+            }
+            url={imgUrl}
           />
         </div>
         <div className="create-post__forms__quill">
@@ -226,6 +242,7 @@ const AdminCreatePost: React.FC = () => {
           className="create-post-button"
         />
       </div>
+      <NotifContainer />
     </div>
   );
 };

@@ -49,7 +49,7 @@ export type NewsDetail = {
 export type CreateNewPost = {
     title: string
     summaryDesc: string
-    imgUrl: string
+    image: File | null
     author: string
     slug: string
     content: string

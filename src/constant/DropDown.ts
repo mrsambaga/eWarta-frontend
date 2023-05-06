@@ -49,6 +49,25 @@ export const TypeDropdown: DropdownOption[] = [
     },
 ];
 
+export const PostTypeDropdown: DropdownOption[] = [
+  {
+    value: '',
+    content: 'All Type'
+  },
+  {
+      value: 'free',
+      content: 'Free',
+  },
+  {
+      value: 'premium',
+      content: 'Premium',
+  },
+  {
+    value: 'vip',
+    content: 'Vip',
+  },
+];
+
 export const SortDateDropdown: DropdownOption[] = [
     {
       value: 'desc',

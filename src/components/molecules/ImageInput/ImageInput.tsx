@@ -5,14 +5,10 @@ import uploadLogo from "../../../img/uploadLogo.png";
 export type ImageInputProps = {
   type: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  imageUrl: string;
+  url: string;
 };
 
-const ImageInput: React.FC<ImageInputProps> = ({
-  type,
-  onChange,
-  imageUrl,
-}) => {
+const ImageInput: React.FC<ImageInputProps> = ({ type, onChange, url }) => {
   return (
     <div className="image-input">
       <div className="image-input__input">
@@ -20,7 +16,7 @@ const ImageInput: React.FC<ImageInputProps> = ({
         <input type={type} onChange={onChange} />
       </div>
       <div className="image-input__image">
-        {imageUrl && <img src={imageUrl} alt={"uploaded"} />}
+        {url && <img src={url} alt={"uploaded"} />}
       </div>
     </div>
   );
