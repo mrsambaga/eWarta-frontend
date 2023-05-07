@@ -22,6 +22,7 @@ import AdminLogin from "./pages/Admin/AdminLogin/AdminLogin";
 import AdminHome from "./pages/Admin/AdminHome/AdminHome";
 import AdminPost from "./pages/Admin/AdminPost/AdminPost";
 import AdminCreatePost from "./pages/Admin/AdminCreatePost/AdminCreatePost";
+import AdminEditPost from "./pages/Admin/AdminEditPost/AdminEditPost";
 
 function App() {
   const PrivateRoutes = () => {
@@ -46,14 +47,33 @@ function App() {
     return <Outlet />;
   };
 
+  const PublicRoutes = () => {
+    const isAuthenticated: boolean = useSelector(
+      (state: RootState) => state.auth.isAuthenticated
+    );
+    const isAdminAuthenticated: boolean = useSelector(
+      (state: RootState) => state.authAdmin.isAdminAuthenticated
+    );
+
+    if (isAuthenticated) {
+      <Navigate to="/" replace />;
+    } else if (isAdminAuthenticated) {
+      <Navigate to="/admin/home" replace />;
+    }
+
+    return <Outlet />;
+  };
+
   return (
     <BrowserRouter>
       <div className="app">
         <Routes>
           <Route element={<Navbar />}>
-            <Route path="/admin/login" element={<AdminLogin />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/login" element={<Login />} />
+            <Route element={<PublicRoutes />}>
+              <Route path="/admin/login" element={<AdminLogin />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/login" element={<Login />} />
+            </Route>
             <Route element={<PrivateRoutes />}>
               <Route path="/" element={<Home />} />
               <Route path="/news/:id" element={<Detail />} />
@@ -63,6 +83,7 @@ function App() {
               <Route path="/admin/home" element={<AdminHome />} />
               <Route path="/admin/posts" element={<AdminPost />} />
               <Route path="/admin/posts/create" element={<AdminCreatePost />} />
+              <Route path="/admin/posts/edit/:id" element={<AdminEditPost />} />
             </Route>
           </Route>
           <Route path="*" element={<NotFound />}></Route>

@@ -46,7 +46,7 @@ export type NewsDetail = {
     content: string
 }
 
-export type CreateNewPost = {
+export type ManagePostForms = {
     title: string
     summaryDesc: string
     image: File | null

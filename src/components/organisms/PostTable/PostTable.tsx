@@ -6,10 +6,11 @@ import { notifyError } from "../../atoms/Toastify/Toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { newsActions } from "../../../store/NewsSlice";
 import { RootState } from "../../../store/IndexStore";
-import "./Table.scss";
+import "./PostTable.scss";
 import moment from "moment";
 import Button from "../../atoms/Button/Button";
 import useFetchPost from "../../../hooks/UseFetchPost";
+import { useNavigate } from "react-router-dom";
 
 const Table: React.FC = () => {
   const token = GetCookie("admin-token");
@@ -54,10 +55,6 @@ const Table: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [out, error]);
 
-  const editClickHandler = () => {
-    return;
-  };
-
   const adminToken = GetCookie("admin-token");
   const [submit, setSubmit] = useState<boolean>(false);
   const [postId, setPostId] = useState<number | null>(null);
@@ -84,6 +81,11 @@ const Table: React.FC = () => {
     setSubmit(true);
   };
 
+  const navigate = useNavigate();
+  const editClickHandler = (id: number) => {
+    navigate(`/admin/posts/edit/${id}`);
+  };
+
   return (
     <div className="table-container">
       <table className="table table-bordered table-striped">
@@ -106,7 +108,7 @@ const Table: React.FC = () => {
               <td className="table__body__button">
                 <Button
                   label="Edit"
-                  onClickHandler={editClickHandler}
+                  onClickHandler={() => editClickHandler(item.postId)}
                   className="table-button"
                 />
                 <Button

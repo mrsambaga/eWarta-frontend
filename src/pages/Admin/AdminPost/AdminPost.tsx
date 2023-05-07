@@ -1,6 +1,6 @@
 import React from "react";
 import "./AdminPost.scss";
-import Table from "../../../components/molecules/Table/Table";
+import Table from "../../../components/organisms/PostTable/PostTable";
 import Button from "../../../components/atoms/Button/Button";
 import { useNavigate } from "react-router-dom";
 
