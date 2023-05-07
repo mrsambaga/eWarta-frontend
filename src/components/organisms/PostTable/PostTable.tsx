@@ -11,6 +11,7 @@ import moment from "moment";
 import Button from "../../atoms/Button/Button";
 import useFetchPost from "../../../hooks/UseFetchPost";
 import { useNavigate } from "react-router-dom";
+import { ClipLoader } from "react-spinners";
 
 const Table: React.FC = () => {
   const token = GetCookie("admin-token");
@@ -58,13 +59,19 @@ const Table: React.FC = () => {
   const adminToken = GetCookie("admin-token");
   const [submit, setSubmit] = useState<boolean>(false);
   const [postId, setPostId] = useState<number | null>(null);
-  const { out: deleteOut, error: deleteError } = useFetchPost(
+  const {
+    out: deleteOut,
+    loading: deleteLoading,
+    error: deleteError,
+  } = useFetchPost(
     "http://localhost:8000/news/delete",
     { postId: postId },
     submit,
     () => setSubmit(false),
     adminToken
   );
+
+  useEffect(() => {}, [deleteLoading]);
 
   useEffect(() => {
     if (deleteError != null) {
@@ -88,6 +95,16 @@ const Table: React.FC = () => {
 
   return (
     <div className="table-container">
+      {deleteLoading && <div className="overlay" />}
+      <div className="table-container__spinner">
+        <ClipLoader
+          color={"#fff104"}
+          loading={deleteLoading}
+          size={150}
+          aria-label="Loading Spinner"
+          data-testid="loader"
+        />
+      </div>
       <table className="table table-bordered table-striped">
         <thead className="table__head">
           <tr>
