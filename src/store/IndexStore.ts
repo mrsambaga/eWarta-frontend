@@ -5,6 +5,7 @@ import registerFormSlice from "./RegisterFormSlice";
 import newsDetailSlice from "./NewsDetailSlice";
 import adminAuthSlice from "./AdminAuthSlice";
 import newsSlice from "./NewsSlice";
+import userSlice from "./UserSlice";
 
 const rootReducer = combineReducers({
     auth: authSlice.reducer,
@@ -12,7 +13,8 @@ const rootReducer = combineReducers({
     registerForm: registerFormSlice.reducer,
     news: newsSlice.reducer,
     newsDetail: newsDetailSlice.reducer,
-    authAdmin: adminAuthSlice.reducer
+    authAdmin: adminAuthSlice.reducer,
+    user: userSlice.reducer
 })
 
 export type RootState = ReturnType<typeof rootReducer>

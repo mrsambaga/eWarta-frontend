@@ -23,6 +23,7 @@ import AdminHome from "./pages/Admin/AdminHome/AdminHome";
 import AdminPost from "./pages/Admin/AdminPost/AdminPost";
 import AdminCreatePost from "./pages/Admin/AdminCreatePost/AdminCreatePost";
 import AdminEditPost from "./pages/Admin/AdminEditPost/AdminEditPost";
+import Profile from "./pages/Profile/Profile";
 
 function App() {
   const PrivateRoutes = () => {
@@ -78,6 +79,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/news/:id" element={<Detail />} />
               <Route path="/test" element={<TestPage />} />
+              <Route path="/profile" element={<Profile />} />
             </Route>
             <Route element={<AdminRoutes />}>
               <Route path="/admin/home" element={<AdminHome />} />
