@@ -1,0 +1,121 @@
+@mixin font-title {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 700;
+    letter-spacing: 0.1px;
+    color: #454745;
+}
+
+@mixin font {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 600;
+    letter-spacing: 0.1px;
+    color: #454745;
+}
+
+.purchase-subscription {
+    display: flex;
+    flex-direction: column;
+    gap: 5rem;
+    margin-top: 70px;
+    width: 100%;
+    max-width: 1000px;
+
+    &__title {
+        & h1 {
+            @include font-title;
+            font-size: 40px;
+            text-align: center;
+        }
+    }
+
+    &__content {
+        margin-top: 40px;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+
+        &__item {
+            padding: 20px;
+            background-color: #f1f3f2;
+            border-radius: 5px;
+            height: 60px;
+            display: flex;
+            justify-content: space-between;
+
+            & div {
+                display: flex;
+                gap: 1rem;
+
+                & h3 {
+                    font-size: 26px;
+                }
+            }
+
+            & h3 {
+                @include font;
+                font-size: 20px;
+            }
+        }
+
+        &__item--selected {
+            padding: 20px;
+            background-color: #4f7177;
+            border-radius: 5px;
+            height: 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            & div {
+                display: flex;
+                gap: 1rem;
+
+                & h3 {
+                    font-size: 26px;
+                    color: #FFFFFF;
+                }
+            }
+
+            & h3 {
+                @include font;
+                font-size: 20px;
+                color: #FFFFFF;
+            }
+        }
+    }
+
+    &__summary {
+        display: flex;
+        justify-content: space-between;
+        padding-left: 20px;
+        
+        & h3 {
+            @include font-title;
+            font-size: 30px;
+        }
+
+        .form {
+            width: 300px !important;
+        }
+    }
+
+    &__button {
+        display: flex;
+        justify-content: flex-end;
+    }
+}
+
+#modal-active {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #F5F5F5;
+    position: absolute;
+    width: 100%;
+    height: 73%;
+    z-index: 2;
+    top: 80px;
+    left: 0;
+}
