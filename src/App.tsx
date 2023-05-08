@@ -24,6 +24,9 @@ import AdminPost from "./pages/Admin/AdminPost/AdminPost";
 import AdminCreatePost from "./pages/Admin/AdminCreatePost/AdminCreatePost";
 import AdminEditPost from "./pages/Admin/AdminEditPost/AdminEditPost";
 import Profile from "./pages/Profile/Profile";
+import HomeSubcsription from "./pages/Subscription/HomeSubscription/HomeSubcsription";
+import PurchaseSubscription from "./pages/Subscription/PurchaseSubscription/PurchaseSubscription";
+import MySubscription from "./pages/Subscription/MySubscription/MySubscription";
 
 function App() {
   const PrivateRoutes = () => {
@@ -80,6 +83,15 @@ function App() {
               <Route path="/news/:id" element={<Detail />} />
               <Route path="/test" element={<TestPage />} />
               <Route path="/profile" element={<Profile />} />
+              <Route path="/subscription" element={<HomeSubcsription />} />
+              <Route
+                path="/subscription/purchase"
+                element={<PurchaseSubscription />}
+              />
+              <Route
+                path="/subscription/my-subscription"
+                element={<MySubscription />}
+              />
             </Route>
             <Route element={<AdminRoutes />}>
               <Route path="/admin/home" element={<AdminHome />} />

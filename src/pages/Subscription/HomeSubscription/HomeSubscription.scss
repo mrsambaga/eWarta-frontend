@@ -1,0 +1,18 @@
+.home-subscription {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 1000px;
+    height: 75vh;
+    margin-bottom: 20px;
+
+    &__purchase {
+        height: 100%;
+        background-color: #fffce2;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-right: 10%;
+        padding-left: 10%;
+    }
+}
