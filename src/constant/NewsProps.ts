@@ -8,6 +8,8 @@ export type News = {
     content: string,
     categoryId: string,
     typeId: string,
+    category: string,
+    type: string,
     createdAt:  string,
     updatedAt:  string,
     deletedAt:  string,
@@ -49,10 +51,13 @@ export type NewsDetail = {
 export type ManagePostForms = {
     title: string
     summaryDesc: string
-    image: File | null
+    image?: File | null
     author: string
     slug: string
     content: string
+    categoryId: string
+    typeId: string
+    imageUrl?: string
     category: string
-    type: string
+    type:string
 }

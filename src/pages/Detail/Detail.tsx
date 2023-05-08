@@ -64,9 +64,10 @@ const Detail: React.FC = () => {
               <div className="detail__main-section__left__image">
                 <img src={imgUrl} alt={title} />
               </div>
-              <div className="detail__main-section__left__content">
-                <p>{content}</p>
-              </div>
+              <div
+                className="detail__main-section__left__content"
+                dangerouslySetInnerHTML={{ __html: `<div>${content}</div>` }}
+              />
             </div>
             <div className="detail__main-section__right"></div>
           </div>

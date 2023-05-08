@@ -3,7 +3,7 @@ import Form from "../../../components/atoms/Form/Form";
 import { FormProps } from "../../../constant/FormProps";
 import "./ManagePost.scss";
 import Button from "../../../components/atoms/Button/Button";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useQuill } from "react-quilljs";
 import "quill/dist/quill.snow.css";
 import Filter from "../../../components/molecules/Filter/Filter";
@@ -23,9 +23,14 @@ import { ClipLoader } from "react-spinners";
 type ManagePostProps = {
   title: string;
   initialValues: ManagePostForms;
+  type: string;
 };
 
-const ManagePost: React.FC<ManagePostProps> = ({ initialValues }) => {
+const ManagePost: React.FC<ManagePostProps> = ({
+  title,
+  initialValues,
+  type,
+}) => {
   const token = GetCookie("admin-token");
 
   /* ----------- Forms --------------  */
@@ -55,7 +60,7 @@ const ManagePost: React.FC<ManagePostProps> = ({ initialValues }) => {
       [key]: event.target.value,
     };
     setNewPost(newPostProps);
-    console.log(newPostProps);
+    console.log(newPost);
   };
 
   const createPostFormProps: FormProps[] = [
@@ -67,7 +72,7 @@ const ManagePost: React.FC<ManagePostProps> = ({ initialValues }) => {
       onChangeProp: (event: React.ChangeEvent<HTMLInputElement>) =>
         handleNewPostChange(event, "title"),
       value: newPost.title,
-      validate: true,
+      validate: type === "create" ? true : false,
     },
     {
       placeholder: "Summary Description",
@@ -77,7 +82,7 @@ const ManagePost: React.FC<ManagePostProps> = ({ initialValues }) => {
       onChangeProp: (event: React.ChangeEvent<HTMLInputElement>) =>
         handleNewPostChange(event, "summaryDesc"),
       value: newPost.summaryDesc,
-      validate: true,
+      validate: type === "create" ? true : false,
     },
     {
       placeholder: "Author",
@@ -87,7 +92,7 @@ const ManagePost: React.FC<ManagePostProps> = ({ initialValues }) => {
       onChangeProp: (event: React.ChangeEvent<HTMLInputElement>) =>
         handleNewPostChange(event, "author"),
       value: newPost.author,
-      validate: true,
+      validate: type === "create" ? true : false,
     },
     {
       placeholder: "Slug",
@@ -97,7 +102,7 @@ const ManagePost: React.FC<ManagePostProps> = ({ initialValues }) => {
       onChangeProp: (event: React.ChangeEvent<HTMLInputElement>) =>
         handleNewPostChange(event, "slug"),
       value: newPost.slug,
-      validate: true,
+      validate: type === "create" ? true : false,
     },
   ];
 
@@ -106,15 +111,17 @@ const ManagePost: React.FC<ManagePostProps> = ({ initialValues }) => {
   const categoryDropdownProps: DropdownProps = {
     onChange: (event: React.ChangeEvent<HTMLSelectElement>) =>
       handleNewPostChange(event, "category"),
-    dropdownOptions: CategoryDropdown.slice(1),
+    dropdownOptions: CategoryDropdown,
     className: "new-post-dropdown",
+    defaultValue: newPost.category,
   };
 
   const postTypeDropdownProps: DropdownProps = {
     onChange: (event: React.ChangeEvent<HTMLSelectElement>) =>
       handleNewPostChange(event, "type"),
-    dropdownOptions: PostTypeDropdown.slice(1),
+    dropdownOptions: PostTypeDropdown,
     className: "new-post-dropdown",
+    defaultValue: newPost.type,
   };
 
   /* ----------- Quill Text Editor --------------  */
@@ -132,17 +139,21 @@ const ManagePost: React.FC<ManagePostProps> = ({ initialValues }) => {
 
   useEffect(() => {
     if (quill) {
+      // quill.setContents(quill.clipboard.convert(newPost.content));
       quill.on("text-change", () => {
         const key: string = "content";
         const newPostContent: ManagePostForms = {
           ...newPost,
           [key]: quillRef.current.firstChild.innerHTML,
         };
-        setNewPost(newPostContent);
+        // setNewPost(newPostContent);
+        setNewPost((prevState) => ({ ...prevState, ...newPostContent }));
         console.log(newPost);
       });
     }
-  }, [quill, quillRef, newPost]);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [quill, newPost]);
 
   /* ----------- Button Handler --------------  */
 
@@ -151,7 +162,13 @@ const ManagePost: React.FC<ManagePostProps> = ({ initialValues }) => {
   };
 
   const submitClickHandler = () => {
-    setSubmit(true);
+    if (type === "create") {
+      setSubmit(true);
+      return;
+    } else if (type === "edit") {
+      setEditSubmit(true);
+      return;
+    }
   };
 
   /* ----------- Fetch Api Create New Post --------------  */
@@ -167,7 +184,11 @@ const ManagePost: React.FC<ManagePostProps> = ({ initialValues }) => {
   body.append("category", newPost.category);
   body.append("type", newPost.type);
 
-  const { out, loading, error } = useFetchPost(
+  const {
+    out: NewPostOut,
+    loading: NewPostLoading,
+    error: NewPostError,
+  } = useFetchPost(
     "http://localhost:8000/news",
     body,
     submit,
@@ -177,14 +198,40 @@ const ManagePost: React.FC<ManagePostProps> = ({ initialValues }) => {
   );
 
   useEffect(() => {
-    console.log("OUT :", out);
-    console.log("ERROR :", error);
-    if (error != null) {
-      notifyError(error.response?.data?.message || error.message);
-    } else if (out != null) {
-      notifySuccess(out.message);
+    if (NewPostError != null) {
+      notifyError(NewPostError.response?.data?.message || NewPostError.message);
+    } else if (NewPostOut != null) {
+      notifySuccess(NewPostOut.message);
     }
-  }, [out, error]);
+  }, [NewPostOut, NewPostError]);
+
+  /* ----------- Fetch Api Edit Post --------------  */
+  const [editSubmit, setEditSubmit] = useState<boolean>(false);
+  const { id } = useParams<{ id: string }>();
+
+  const {
+    out: EditPostOut,
+    loading: EditPostLoading,
+    error: EditPostError,
+  } = useFetchPost(
+    `http://localhost:8000/news/${id}`,
+    body,
+    editSubmit,
+    () => setEditSubmit(false),
+    token,
+    "multipart/form-data",
+    "put"
+  );
+
+  useEffect(() => {
+    if (EditPostError != null) {
+      notifyError(
+        EditPostError.response?.data?.message || EditPostError.message
+      );
+    } else if (EditPostOut != null) {
+      notifySuccess(EditPostOut.message);
+    }
+  }, [EditPostOut, EditPostError]);
 
   const override: CSSProperties = {
     display: "block",
@@ -193,11 +240,11 @@ const ManagePost: React.FC<ManagePostProps> = ({ initialValues }) => {
 
   return (
     <div className="create-post">
-      {loading && <div className="overlay" />}
+      {(NewPostLoading || EditPostLoading) && <div className="overlay" />}
       <div className="create-post__spinner">
         <ClipLoader
           color={"#fff104"}
-          loading={loading}
+          loading={NewPostLoading || EditPostLoading}
           cssOverride={override}
           size={150}
           aria-label="Loading Spinner"
@@ -205,7 +252,7 @@ const ManagePost: React.FC<ManagePostProps> = ({ initialValues }) => {
         />
       </div>
       <div className="create-post__title">
-        <h1>Create New Post</h1>
+        <h1>{title}</h1>
       </div>
       <div className="create-post__forms">
         {createPostFormProps.map((formProp) => (
@@ -235,7 +282,13 @@ const ManagePost: React.FC<ManagePostProps> = ({ initialValues }) => {
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               handleNewPostChange(e, "image")
             }
-            url={imgUrl}
+            url={
+              newPost.imageUrl && imgUrl
+                ? imgUrl
+                : newPost.imageUrl
+                ? newPost.imageUrl
+                : imgUrl
+            }
           />
         </div>
         <div className="create-post__forms__quill">

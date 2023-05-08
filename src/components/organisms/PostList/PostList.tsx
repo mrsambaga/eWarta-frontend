@@ -104,6 +104,8 @@ const PostList: React.FC = () => {
           author: item.author,
           categoryId: item.categoryId,
           typeId: item.typeId,
+          category: item.category,
+          type: item.type,
           slug: item.slug,
           content: item.content,
           createdAt: item.createdAt,
@@ -120,6 +122,7 @@ const PostList: React.FC = () => {
 
   const [newsHighlight, setNewsHighlight] = useState<NewsHighlight[]>([]);
   useEffect(() => {
+    console.log(news);
     const newsHighlightDTO: NewsHighlight[] = news.map((item) => {
       const { postId, title, summaryDesc, imgUrl, author } = item;
       return {

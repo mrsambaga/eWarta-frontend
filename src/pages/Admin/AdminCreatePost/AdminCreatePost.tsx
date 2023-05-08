@@ -13,13 +13,15 @@ const AdminCreatePost: React.FC = () => {
     content: "",
     category: "",
     type: "",
+    categoryId: "",
+    typeId: "",
   };
 
   const title: string = "Create New Post";
 
   return (
     <div className="create-post">
-      <ManagePost title={title} initialValues={initialValues} />
+      <ManagePost title={title} initialValues={initialValues} type="create"/>
     </div>
   );
 };

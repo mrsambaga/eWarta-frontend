@@ -31,7 +31,7 @@ const Table: React.FC = () => {
     }
 
     if (out != null && out.data != null) {
-      console.log(out);
+      console.log("Out : ", out);
       const News: News[] = out.data.map((item) => {
         const dateTime = moment(item.createdAt).format("HH:mm - DD MMMM YYYY");
 
@@ -43,6 +43,8 @@ const Table: React.FC = () => {
           author: item.author,
           categoryId: item.categoryId,
           typeId: item.typeId,
+          category: item.category,
+          type: item.type,
           slug: item.slug,
           content: item.content,
           createdAt: dateTime,
