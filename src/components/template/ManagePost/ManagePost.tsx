@@ -19,6 +19,7 @@ import {
 import { GetCookie } from "../../../utils/Cookies/Cookies";
 import { ManagePostForms } from "../../../constant/NewsProps";
 import { ClipLoader } from "react-spinners";
+import { ApiUrl } from "../../../utils/ApiUrl/ApiUrl";
 
 type ManagePostProps = {
   title: string;
@@ -139,7 +140,7 @@ const ManagePost: React.FC<ManagePostProps> = ({
 
   useEffect(() => {
     if (quill) {
-      // quill.setContents(quill.clipboard.convert(newPost.content));
+      quill.setContents(quill.clipboard.convert(newPost.content));
       quill.on("text-change", () => {
         const key: string = "content";
         const newPostContent: ManagePostForms = {
@@ -153,7 +154,7 @@ const ManagePost: React.FC<ManagePostProps> = ({
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [quill, newPost]);
+  }, [quill]);
 
   /* ----------- Button Handler --------------  */
 
@@ -162,6 +163,8 @@ const ManagePost: React.FC<ManagePostProps> = ({
   };
 
   const submitClickHandler = () => {
+    console.log("BODY : ", body);
+
     if (type === "create") {
       setSubmit(true);
       return;
@@ -173,14 +176,13 @@ const ManagePost: React.FC<ManagePostProps> = ({
 
   /* ----------- Fetch Api Create New Post --------------  */
   const [submit, setSubmit] = useState<boolean>(false);
-
   const body = new FormData();
   body.append("title", newPost.title);
   body.append("summaryDesc", newPost.summaryDesc);
   body.append("image", newPost.image!);
   body.append("author", newPost.author);
   body.append("slug", newPost.slug);
-  body.append("content", newPost.content);
+  body.append("content", quillRef.current?.firstChild?.innerHTML);
   body.append("category", newPost.category);
   body.append("type", newPost.type);
 
@@ -189,7 +191,7 @@ const ManagePost: React.FC<ManagePostProps> = ({
     loading: NewPostLoading,
     error: NewPostError,
   } = useFetchPost(
-    "http://localhost:8000/news",
+    ApiUrl + "/news",
     body,
     submit,
     () => setSubmit(false),
@@ -214,7 +216,7 @@ const ManagePost: React.FC<ManagePostProps> = ({
     loading: EditPostLoading,
     error: EditPostError,
   } = useFetchPost(
-    `http://localhost:8000/news/${id}`,
+    ApiUrl + `/news/${id}`,
     body,
     editSubmit,
     () => setEditSubmit(false),

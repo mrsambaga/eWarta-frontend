@@ -9,7 +9,7 @@ import Modal from "../../../components/atoms/Modal/Modal";
 const PurchaseSubscription: React.FC = () => {
   const [subscriptionId, setSubscriptionId] = useState<number>(0);
   const [selectedItem, setSelectedItem] = useState<number>(-1);
-  const [voucherCode, setVoucherCode] = useState<string>("");
+  const [voucherCode] = useState<string>("");
   const [success, setSuccess] = useState<boolean>(false);
 
   const handleCheckoutClick = () => {

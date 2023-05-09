@@ -27,6 +27,7 @@ import Profile from "./pages/Profile/Profile";
 import HomeSubcsription from "./pages/Subscription/HomeSubscription/HomeSubcsription";
 import PurchaseSubscription from "./pages/Subscription/PurchaseSubscription/PurchaseSubscription";
 import MySubscription from "./pages/Subscription/MySubscription/MySubscription";
+import PaymentForm from "./pages/Subscription/PaymentForm/PaymentForm";
 
 function App() {
   const PrivateRoutes = () => {
@@ -91,6 +92,10 @@ function App() {
               <Route
                 path="/subscription/my-subscription"
                 element={<MySubscription />}
+              />
+              <Route
+                path="/subscription/purchase/payment"
+                element={<PaymentForm />}
               />
             </Route>
             <Route element={<AdminRoutes />}>

@@ -1,5 +1,4 @@
 import React from "react";
-import successLogo from "../img/icon-success.png";
 import { useNavigate } from "react-router-dom";
 import "./Modal.scss";
 import QRCode from "react-qr-code";
@@ -17,7 +16,7 @@ const Modal: React.FC<CardProps> = ({ toggleSuccess, label }) => {
   };
 
   const onClickQR = () => {
-    navigate("/subscription");
+    navigate("/subscription/purchase/payment");
   };
 
   return (

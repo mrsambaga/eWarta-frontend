@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { newsDetailActions } from "../../store/NewsDetailSlice";
 import { RootState } from "../../store/IndexStore";
 import { useParams } from "react-router-dom";
+import { ApiUrl } from "../../utils/ApiUrl/ApiUrl";
 
 const Detail: React.FC = () => {
   const dispatch = useDispatch();
@@ -20,7 +21,7 @@ const Detail: React.FC = () => {
 
   const { out, loading, error } = useFetchGet<{
     data: NewsDetailResponse;
-  }>(`http://localhost:8000/news/${id}`, token);
+  }>(`${ApiUrl}/news/${id}`, token);
 
   useEffect(() => {
     if (error) {

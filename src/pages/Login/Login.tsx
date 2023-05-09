@@ -14,6 +14,7 @@ import { loginFormActions } from "../../store/LoginFormSlice";
 import { RootState } from "../../store/IndexStore";
 import { LoginForm } from "../../constant/FormProps";
 import { loginSchema } from "../../utils/Validation/LoginValidation";
+import { ApiUrl } from "../../utils/ApiUrl/ApiUrl";
 
 const Login: React.FC = () => {
   const { email, password } = useSelector(
@@ -52,11 +53,8 @@ const Login: React.FC = () => {
     role: defaultRole,
   };
 
-  const { out, error } = useFetchPost(
-    "http://localhost:8000/login",
-    body,
-    submit,
-    () => setSubmit(false)
+  const { out, error } = useFetchPost(ApiUrl + "/login", body, submit, () =>
+    setSubmit(false)
   );
 
   useEffect(() => {
