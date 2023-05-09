@@ -15,6 +15,7 @@ import useFetchPost from "../../hooks/UseFetchPost";
 import { Navigate } from "react-router-dom";
 import { registerSchema } from "../../utils/Validation/RegisterValidation";
 import "./Register.scss";
+import { ApiUrl } from "../../utils/ApiUrl/ApiUrl";
 
 const Register: React.FC = () => {
   const { name, email, password, passwordConfirm, phone, address, referral } =
@@ -107,11 +108,8 @@ const Register: React.FC = () => {
     ref_referral: referral,
   };
 
-  const { out, error } = useFetchPost(
-    "http://localhost:8000/register",
-    body,
-    submit,
-    () => setSubmit(false)
+  const { out, error } = useFetchPost(ApiUrl + "/register", body, submit, () =>
+    setSubmit(false)
   );
 
   useEffect(() => {

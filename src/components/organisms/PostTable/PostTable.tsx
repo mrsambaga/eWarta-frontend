@@ -12,6 +12,7 @@ import Button from "../../atoms/Button/Button";
 import useFetchPost from "../../../hooks/UseFetchPost";
 import { useNavigate } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
+import { ApiUrl } from "../../../utils/ApiUrl/ApiUrl";
 
 const Table: React.FC = () => {
   const token = GetCookie("admin-token");
@@ -19,7 +20,7 @@ const Table: React.FC = () => {
   const [refresh, setRefresh] = useState<boolean>(false);
   const { out, error } = useFetchGet<{
     data: News[];
-  }>(`http://localhost:8000/news`, token, undefined, refresh);
+  }>(`${ApiUrl}/news`, token, undefined, refresh);
 
   const { news } = useSelector((state: RootState) => state.news);
 
@@ -66,7 +67,7 @@ const Table: React.FC = () => {
     loading: deleteLoading,
     error: deleteError,
   } = useFetchPost(
-    "http://localhost:8000/news/delete",
+    ApiUrl + "/news/delete",
     { postId: postId },
     submit,
     () => setSubmit(false),

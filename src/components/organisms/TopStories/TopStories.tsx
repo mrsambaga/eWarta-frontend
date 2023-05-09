@@ -1,13 +1,74 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./TopStories.scss";
-import gunsImg from "../../../img/guns.png";
-import peopleImg from "../../../img/people.png";
-import strikeImg from "../../../img/strike.png";
-import vaccineImg from "../../../img/vaccine.jpg";
-import tiktokeImg from "../../../img/tiktok.png";
 import NewsContainer from "../../molecules/NewsContainer/NewsContainer";
+import { useDispatch, useSelector } from "react-redux";
+import { GetCookie } from "../../../utils/Cookies/Cookies";
+import useFetchGet from "../../../hooks/UseFetchGet";
+import { News, NewsHighlight } from "../../../constant/NewsProps";
+import { ApiUrl } from "../../../utils/ApiUrl/ApiUrl";
+import { notifyError } from "../../atoms/Toastify/Toastify";
+import { newsActions } from "../../../store/NewsSlice";
+import { RootState } from "../../../store/IndexStore";
 
 const TopStories: React.FC = () => {
+  const dispatch = useDispatch();
+  const token = GetCookie("token");
+  const { news } = useSelector((state: RootState) => state.news);
+  const { out, loading, error } = useFetchGet<{
+    data: News[];
+  }>(`${ApiUrl}/news`, token);
+
+  useEffect(() => {
+    console.log(out, error);
+    if (error != null) {
+      const errorMessage = error.response?.data || error.message;
+      notifyError(JSON.stringify(errorMessage));
+      return;
+    }
+
+    if (out != null && out.data != null) {
+      console.log(out);
+      const News: News[] = out.data.map((item) => {
+        return {
+          postId: item.postId,
+          title: item.title,
+          summaryDesc: item.summaryDesc,
+          imgUrl: item.imgUrl,
+          author: item.author,
+          categoryId: item.categoryId,
+          typeId: item.typeId,
+          category: item.category,
+          type: item.type,
+          slug: item.slug,
+          content: item.content,
+          createdAt: item.createdAt,
+          updatedAt: item.updatedAt,
+          deletedAt: item.deletedAt,
+        };
+      });
+
+      dispatch(newsActions.setNews(News));
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [out, error]);
+
+  const [newsHighlight, setNewsHighlight] = useState<NewsHighlight[]>([]);
+  useEffect(() => {
+    console.log(news);
+    const newsHighlightDTO: NewsHighlight[] = news.map((item) => {
+      const { postId, title, summaryDesc, imgUrl, author } = item;
+      return {
+        id: postId,
+        title: title,
+        desc: summaryDesc,
+        img: imgUrl,
+        author: author,
+      };
+    });
+    setNewsHighlight(newsHighlightDTO);
+  }, [news]);
+
   return (
     <div className="top-stories">
       <div className="top-stories__title">
@@ -16,66 +77,33 @@ const TopStories: React.FC = () => {
         <div className="top-stories__title__line"></div>
       </div>
       <div className="top-stories__content">
-        <NewsContainer
-          news={[
-            {
-              id: 90,
-              img: gunsImg,
-              alt: "guns",
-              title:
-                "America isn’t protecting its kids and teens from gun violence",
-              desc: "A shooting at a Texas prom party highlights the huge toll of gun violence on kids and teens in the US.",
-              author: "test",
-            },
-            {
-              id: 91,
-              img: peopleImg,
-              alt: "people",
-              title: "How to find your people",
-              desc: "An adapted excerpt from Lane Moore’s You Will Find Your People: How to Make Meaningful Friendships as an Adult.",
-              author: "test",
-            },
-          ]}
-          className="double"
-          type="primary"
-        />
-        <NewsContainer
-          news={[
-            {
-              id: 92,
-              img: vaccineImg,
-              alt: "vaccine",
-              title:
-                "How new vaccine technologies could reduce the massive death toll from malaria",
-              desc: "There’s still a long way to go, but RNA vaccines might help in the fight against malaria.",
-              author: "test",
-            },
-          ]}
-          className="single"
-          type="primary"
-        />
-        <NewsContainer
-          news={[
-            {
-              id: 93,
-              img: strikeImg,
-              alt: "strike",
-              title: "What happens if there’s a Hollywood writers strike?",
-              desc: "It’s been 15 years since the last WGA strike, and the stakes are far greater.",
-              author: "test",
-            },
-            {
-              id: 94,
-              img: tiktokeImg,
-              alt: "tiktok",
-              title: "How TikTok dances trained an AI to see",
-              desc: "And remember the Mannequin Challenge? Yep, they used that too.",
-              author: "test",
-            },
-          ]}
-          className="double"
-          type="primary"
-        />
+        {loading ? (
+          <h1>Loading...</h1>
+        ) : (
+          <>
+            <NewsContainer
+              news={newsHighlight}
+              className="double"
+              type="primary"
+              from={0}
+              to={2}
+            />
+            <NewsContainer
+              news={newsHighlight}
+              className="single"
+              type="primary"
+              from={2}
+              to={3}
+            />
+            <NewsContainer
+              news={newsHighlight}
+              className="double"
+              type="primary"
+              from={3}
+              to={5}
+            />
+          </>
+        )}
       </div>
     </div>
   );

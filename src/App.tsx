@@ -94,7 +94,7 @@ function App() {
                 element={<MySubscription />}
               />
               <Route
-                path="/subscription/purchase/payment"
+                path="/subscription/purchase/payment/:id"
                 element={<PaymentForm />}
               />
             </Route>

@@ -61,7 +61,6 @@ const ManagePost: React.FC<ManagePostProps> = ({
       [key]: event.target.value,
     };
     setNewPost(newPostProps);
-    console.log(newPost);
   };
 
   const createPostFormProps: FormProps[] = [

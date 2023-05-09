@@ -3,20 +3,22 @@ import { useNavigate } from "react-router-dom";
 import "./Modal.scss";
 import QRCode from "react-qr-code";
 import Button from "../Button/Button";
+import { ApiUrl } from "../../../utils/ApiUrl/ApiUrl";
 
 type CardProps = {
-  toggleSuccess: (success: boolean) => void;
+  qrOnClick: () => void;
   label: string;
+  transactionId: string;
 };
 
-const Modal: React.FC<CardProps> = ({ toggleSuccess, label }) => {
+const Modal: React.FC<CardProps> = ({ qrOnClick, label, transactionId }) => {
   const navigate = useNavigate();
-  const onClickModal = () => {
-    toggleSuccess(false);
+  const handleCloseClick = () => {
+    navigate("/subscription/my-subscription");
   };
 
   const onClickQR = () => {
-    navigate("/subscription/purchase/payment");
+    qrOnClick();
   };
 
   return (
@@ -24,12 +26,16 @@ const Modal: React.FC<CardProps> = ({ toggleSuccess, label }) => {
       <h3 className="qr-modal__title">{label}</h3>
       <div className="qr-modal__content">
         <div className="qr-modal__content__qr">
-          <QRCode value={"www.google.com"} size={320} onClick={onClickQR} />
+          <QRCode
+            value={`${ApiUrl}/transaction/${transactionId}`}
+            size={320}
+            onClick={onClickQR}
+          />
         </div>
         <div className="qr-modal__content__button">
           <Button
             label="Close"
-            onClickHandler={onClickModal}
+            onClickHandler={handleCloseClick}
             className="profile-button"
           />
         </div>

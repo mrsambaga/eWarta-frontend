@@ -7,11 +7,12 @@ import { notifyError } from "../../components/atoms/Toastify/Toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { newsDetailActions } from "../../store/NewsDetailSlice";
 import { RootState } from "../../store/IndexStore";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { ApiUrl } from "../../utils/ApiUrl/ApiUrl";
 
 const Detail: React.FC = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const token = GetCookie("token");
   const { id } = useParams<{ id: string }>();
 
@@ -20,17 +21,21 @@ const Detail: React.FC = () => {
   );
 
   const { out, loading, error } = useFetchGet<{
+    code: string;
     data: NewsDetailResponse;
+    message: string;
   }>(`${ApiUrl}/news/${id}`, token);
 
   useEffect(() => {
+    console.log(out);
+
     if (error) {
       const errorMessage = error.response?.data || error.message;
       notifyError(JSON.stringify(errorMessage));
       return;
-    }
-
-    if (out != null && out.data != null) {
+    } else if (out != null && out.code === "SUCCESS_ACCESSED") {
+      navigate("/not-found");
+    } else if (out != null && out.data != null) {
       console.log(out);
       const newsDetail: NewsDetail = {
         title: out.data.title,

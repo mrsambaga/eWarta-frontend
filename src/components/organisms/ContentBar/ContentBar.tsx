@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 const ContentBar: React.FC = () => {
   const navigate = useNavigate();
   const subscribeButtonHandler = () => {
-    navigate("/subscribe");
+    navigate("/subscription");
   };
 
   return (

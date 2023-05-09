@@ -8,12 +8,16 @@ type NewsContainerProps = {
   news: NewsHighlight[];
   className: string;
   type: string;
+  from?: number;
+  to?: number;
 };
 
 const NewsContainer: React.FC<NewsContainerProps> = ({
   news,
   className,
   type,
+  from,
+  to,
 }) => {
   const getCardComponent = (type: string) => {
     switch (type) {
@@ -28,9 +32,11 @@ const NewsContainer: React.FC<NewsContainerProps> = ({
 
   const CardComponent = getCardComponent(type);
 
+  const newsToRender = to ? news.slice(from, to) : news.slice(from);
+
   return (
     <div className={className}>
-      {news.map((newsItem) => (
+      {newsToRender.map((newsItem) => (
         <CardComponent
           key={newsItem.id}
           id={newsItem.id}

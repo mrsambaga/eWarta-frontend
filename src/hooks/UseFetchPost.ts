@@ -21,7 +21,7 @@ const useFetchPost = <T>(
         try {
           const headers = token ? { Authorization: `Bearer ${token}` } : token && contentType ? {"content-type": "multipart/form-data", Authorization: `Bearer ${token}`} : {};
           const config = { headers };
-          const requestMethod = type === 'put' ? axios.put : axios.post;
+          const requestMethod = type === 'put' ? axios.put : type === 'patch' ? axios.patch : axios.post;
           const response = await requestMethod(url, body, config);
           setOut(response?.data);
           setError(null);

@@ -14,6 +14,7 @@ import useFetchPost from "../../../hooks/UseFetchPost";
 import { ButtonProps } from "../../../constant/ButtonProps";
 import Card from "../../../components/organisms/Card/Card";
 import { adminAuthActions } from "../../../store/AdminAuthSlice";
+import { ApiUrl } from "../../../utils/ApiUrl/ApiUrl";
 
 const AdminLogin: React.FC = () => {
   const { email, password } = useSelector(
@@ -52,11 +53,8 @@ const AdminLogin: React.FC = () => {
     role: "admin",
   };
 
-  const { out, error } = useFetchPost(
-    "http://localhost:8000/login",
-    body,
-    submit,
-    () => setSubmit(false)
+  const { out, error } = useFetchPost(ApiUrl + "/login", body, submit, () =>
+    setSubmit(false)
   );
 
   useEffect(() => {

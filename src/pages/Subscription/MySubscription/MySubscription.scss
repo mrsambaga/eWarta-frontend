@@ -26,6 +26,7 @@
     margin-bottom: 50px;
 
     &__title {
+        margin-bottom: 100px;
 
         & h1 {
             @include font-title;
@@ -38,18 +39,25 @@
         padding: 20px;
         background-color: #f1f3f2;
         border-radius: 5px;
-        margin-top: 100px;
         display: flex;
         justify-content: space-between;
+        margin-top: 20px;
 
-        & h3:first-child {
+        & h3 {
             @include font-title;
             font-size: 26px;
         }
 
-        & h3 {
-            @include font;
-            font-size: 22px;
+        &__right {
+
+            & h3 {
+                @include font;
+                font-size: 22px;
+            }
+
+            display: flex;
+            align-items: center;
+            gap: 1rem;
         }
     }
 

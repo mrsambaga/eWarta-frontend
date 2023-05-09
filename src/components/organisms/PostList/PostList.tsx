@@ -18,6 +18,7 @@ import {
 } from "../../../constant/DropDown";
 import { debounce } from "../../../utils/Debounce/Debounce";
 import { newsActions } from "../../../store/NewsSlice";
+import { ApiUrl } from "../../../utils/ApiUrl/ApiUrl";
 
 const PostList: React.FC = () => {
   const { news } = useSelector((state: RootState) => state.news);
@@ -84,7 +85,7 @@ const PostList: React.FC = () => {
 
   const { out, loading, error } = useFetchGet<{
     data: News[];
-  }>(`http://localhost:8000/news`, token, param);
+  }>(`${ApiUrl}/news`, token, param);
 
   useEffect(() => {
     if (error) {
@@ -152,6 +153,7 @@ const PostList: React.FC = () => {
                 news={newsHighlight}
                 className="main"
                 type="secondary"
+                from={5}
               />
             </>
           )}
