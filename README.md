@@ -1,8 +1,12 @@
-# Stage 01 Project Frontend
+# eWarta Frontend
 
 ## Description
 
-This is stage 01 web app frontend project that uses Typescript, ReactJS, Axios, and Redux. This project implement atomic design & reusable component.
+This is eWarta web app frontend project that uses Typescript, ReactJS, Axios, and Redux. This project implement atomic design & reusable component.
+
+## Link to eWarta backend repo
+
+[eWarta backend](https://github.com/mrsambaga/eWarta-backend)
 
 ## How to run project
 
